@@ -22,10 +22,11 @@ const isLoggedIn = ref(true);
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-3 link-secondary fs-4">首页</a></li>
-          <li><a href="#" class="nav-link px-3 link-dark fs-4">博客</a></li>
-          <li><a href="#" class="nav-link px-3 link-dark fs-4">技术</a></li>
-          <li><a href="#" class="nav-link px-3 link-dark fs-4">案例</a></li>
+          <li><router-link to="/" class="nav-link px-3 link-dark fs-4">首页</router-link></li>
+          <li><router-link to="/blog" class="nav-link px-3 link-dark fs-4">博客</router-link></li>
+          <li><router-link to="/tech" class="nav-link px-3 link-dark fs-4">技术</router-link></li>
+          <li><router-link to="/case" class="nav-link px-3 link-dark fs-4">案例</router-link></li>
+          <li><router-link to="/about" class="nav-link px-3 link-dark fs-4">关于</router-link></li>
         </ul>
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
