@@ -7,7 +7,7 @@ defineOptions({
 });
 
 // 响应式变量
-const isLoggedIn = ref(true);
+const isLoggedIn = ref(false);
 
 </script>
 
@@ -22,11 +22,13 @@ const isLoggedIn = ref(true);
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><router-link to="/" class="nav-link px-3 link-dark fs-4">首页</router-link></li>
-          <li><router-link to="/blog" class="nav-link px-3 link-dark fs-4">博客</router-link></li>
-          <li><router-link to="/tech" class="nav-link px-3 link-dark fs-4">技术</router-link></li>
-          <li><router-link to="/case" class="nav-link px-3 link-dark fs-4">案例</router-link></li>
-          <li><router-link to="/about" class="nav-link px-3 link-dark fs-4">关于</router-link></li>
+          <li><router-link to="/" class="nav-link px-3 link-dark fs-6">首页</router-link></li>
+          <li><router-link to="/hot" class="nav-link px-3 link-dark fs-6">热门文章</router-link></li>
+          <li><router-link to="/tech" class="nav-link px-3 link-dark fs-6">大模型</router-link></li>
+          <li><router-link to="/finance" class="nav-link px-3 link-dark fs-6">财经</router-link></li>
+          <li v-if="isLoggedIn"><router-link to="/finance" class="nav-link px-3 link-dark fs-6">创作者中心</router-link>
+          </li>
+          <li><router-link to="/about" class="nav-link px-3 link-dark fs-6">关于</router-link></li>
         </ul>
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
