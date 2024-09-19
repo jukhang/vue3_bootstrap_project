@@ -7,7 +7,7 @@ defineOptions({
 });
 
 // 响应式变量
-const isLoggedIn = ref(false);
+const isLoggedIn = ref(true);
 
 </script>
 
@@ -43,7 +43,7 @@ const isLoggedIn = ref(false);
           <!-- <button type="button" class="btn btn-outline-dark col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" @click="$router.push('/signup')">注册</button> -->
         </div>
         <div v-else class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+          <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" @click=" $router.push('/new-story')">
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" version="1.2" fill="none" viewBox="0 0 24 24"
               aria-label="Write">
               <path fill="currentColor"

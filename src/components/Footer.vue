@@ -1,6 +1,4 @@
 <script setup>
-
-
 defineOptions({
   name: 'AppFooter'
 });
