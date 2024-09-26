@@ -7,9 +7,10 @@ import AppSiderbar from '../components/Siderbar.vue'
 </script>
 
 <template>
-  <AppHeader />
 
   <div class="container">
+
+    <AppHeader />
 
     <div class="p-4 p-md-5 mb-4 mt-4 custom_rounded text-body-emphasis bg-body-secondary">
       <div class="col-lg-12 px-0">
@@ -163,10 +164,8 @@ import AppSiderbar from '../components/Siderbar.vue'
       <AppSiderbar />
     </div>
 
+    <AppFooter />
   </div>
-
-  <AppFooter />
-
 </template>
 
 <style>
