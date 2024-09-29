@@ -72,10 +72,10 @@ const isLoggedIn = ref(true);
           </svg>
         </div>
         <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-          <a href="#" class="" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+          <a href="#" class="" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle img-zoom">
           </a>
-          <ul class="dropdown-menu mt-3 text-small" aria-labelledby="dropdownUser1">
+          <ul class="dropdown-menu mt-3 text-small" aria-labelledby="navbarDropdownMenuLink">
             <li>
               <a class="dropdown-item" href="#">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -135,4 +135,12 @@ const isLoggedIn = ref(true);
 </template>
 
 
-<style scoped></style>
+<style scoped>
+.img-zoom {
+  transition: transform 0.3s ease;
+}
+
+.img-zoom:hover {
+  transform: scale(1.3);
+}
+</style>

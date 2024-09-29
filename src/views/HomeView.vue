@@ -12,7 +12,7 @@ import AppSiderbar from '../components/Siderbar.vue'
 
     <AppHeader />
 
-    <div class="p-4 p-md-5 mb-4 mt-4 custom_rounded text-body-emphasis bg-body-secondary">
+    <div class="p-4 p-md-5 mb-4 mt-4 custom_rounded text-body-emphasis bg-body-secondary  blog-cover">
       <div class="col-lg-12 px-0">
         <h1 class="">How build high-quality system with best practices.</h1>
         <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently
@@ -36,7 +36,7 @@ import AppSiderbar from '../components/Siderbar.vue'
               </svg>
             </a>
           </div>
-          <div class="col-auto d-none d-lg-block">
+          <div class="col-auto d-none d-lg-block background-sky">
             <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img"
               aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
               <title>Placeholder</title>
@@ -173,5 +173,16 @@ import AppSiderbar from '../components/Siderbar.vue'
   font-size: 36px !important;
   color: #000000 !important;
   font-weight: bold !important;
+}
+
+.blog-cover {
+  background-image: url('/blog-cover.webp');
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
