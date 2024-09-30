@@ -3,10 +3,11 @@ import AppHeader from '../components/Header.vue'
 </script>
 
 <template>
-  <AppHeader />
 
-  <main>
-    <div class="container">
+  <div class="container">
+    <AppHeader />
+
+    <main>
       <div class="row">
 
         <div class="p-5 mb-4 bg-light rounded-3">
@@ -17,8 +18,10 @@ import AppHeader from '../components/Header.vue'
           </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
+
+
+  </div>
 </template>
 
 <style></style>

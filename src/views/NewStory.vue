@@ -132,6 +132,8 @@ import LinkTool from '@editorjs/link';
 import Embed from '@editorjs/embed';
 import Table from '@editorjs/table';
 import ImageTool from '@editorjs/image';
+import editorjsCodeflask from '@calumk/editorjs-codeflask';
+import editorjsCodecup from '@calumk/editorjs-codecup';
 
 const editor = ref(null);
 const isSubmitDisabled = ref(true);
@@ -186,7 +188,7 @@ onMounted(() => {
         shortcut: 'CMD+SHIFT+M',
       },
       code: {
-        class: CodeTool,
+        class: editorjsCodecup,
         shortcut: 'CMD+SHIFT+C',
         config: {
 

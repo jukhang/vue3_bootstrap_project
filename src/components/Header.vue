@@ -1,14 +1,48 @@
 <script setup>
 
 import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
 defineOptions({
   name: 'AppHeader'
 });
 
-// 响应式变量
-const isLoggedIn = ref(true);
+const isLoggedIn = ref(false);  // 响应式变量
+const username = ref('')
+const password = ref('')
 
+// 处理登录请求
+const handleLogin = async () => {
+  try {
+    // 发起 POST 请求，假设接口为 '/api/login'
+    const response = await axios.post('/api/login', {
+      username: username.value,
+      password: password.value,
+    })
+
+    if (response.data.success) {
+      // 如果登录成功，更新登录状态并保存 token
+      isLoggedIn.value = true
+      localStorage.setItem('token', response.data.token)
+    } else {
+      alert('登录失败，请检查用户名或密码')
+    }
+  } catch (error) {
+    console.error('登录请求失败', error)
+    alert('登录请求失败，请稍后再试')
+  }
+}
+
+// 处理登出请求
+const handleLogout = () => {
+  isLoggedIn.value = false
+  localStorage.removeItem('token')
+}
+
+// 检查本地存储中的 token 是否存在，决定是否自动登录
+if (localStorage.getItem('token')) {
+  isLoggedIn.value = true
+}
 </script>
 
 <template>
