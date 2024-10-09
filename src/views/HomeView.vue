@@ -4,6 +4,79 @@ import AppHeader from '../components/Header.vue'
 import AppFooter from '../components/Footer.vue'
 import AppSiderbar from '../components/Siderbar.vue'
 
+import { ref, onMounted } from 'vue';
+import { Popover } from 'bootstrap';
+import axios from 'axios';
+
+const popoverContent = `
+  <div>
+    <div class="d-flex align-items-center">
+      <img src="https://github.com/mdo.png" alt="mdo" width="30" height="30" class="rounded-circle">
+      <button class="btn btn-primary btn-sm me-2">Follow</button>
+    </div>
+    <strong>longfellow</strong>
+    <p>Followers: 123</p>
+    <p>A brief description about the user.</p>
+  </div>
+`;
+
+const avatar = ref(null);
+const name = ref(null);
+
+const showPopover = (event) => {
+  const popover = Popover.getInstance(event.currentTarget) || new Popover(event.currentTarget, {
+    content: popoverContent,
+    html: true,
+    placement: 'top',
+    delay: { "show": 100, "hide": 100 }  // 添加延迟时间
+  });
+  popover.show();
+};
+
+const hidePopover = (event) => {
+  const popover = Popover.getInstance(event.currentTarget);
+  if (popover) {
+    popover.hide();
+  }
+};
+
+const initializePopovers = () => {
+  const popoverTriggerList = document.querySelectorAll('.cursor-pointer');
+  popoverTriggerList.forEach(trigger => {
+    new Popover(trigger, {
+      content: popoverContent.value,
+      html: true,
+      placement: 'top',
+      delay: { "show": 100, "hide": 100 },  // 添加延迟时间
+    });
+  });
+};
+
+const articles = ref([]); // 存储多篇文章数据
+
+// 获取文章数据
+const fetchArticles = async () => {
+  try {
+    const response = await axios.get('http://localhost:8000/api/v1/articles'); // 根据实际接口调整
+    articles.value = response.data.data; // 假设返回的是文章数组
+  } catch (error) {
+    console.error('Error fetching articles:', error);
+  }
+};
+
+// 格式化发布日期
+const formattedDate = (dateString) => {
+  const options = { year: 'numeric', month: 'short', day: 'numeric' };
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-US', options).format(date);
+};
+
+onMounted(() => {
+  fetchArticles();
+  initializePopovers(); // 合并初始化逻辑
+});
+
+
 </script>
 
 <template>
@@ -98,51 +171,22 @@ import AppSiderbar from '../components/Siderbar.vue'
 
     <div class="row g-5">
       <div class="col-md-8">
-        <!-- <h3 class="pb-4 mb-4 border-bottom">
-          From the Firehose
-        </h3> -->
-
-        <article class="blog-post border-bottom">
+        <article v-for="(articleItem, index) in articles" :key="index" class="blog-post border-bottom">
           <h2 class="display-5 link-body-emphasis mb-3 mt-3">
-            <router-link to="/post/article" class="text-decoration-none">Sample blog post</router-link>
+            <router-link :to="articleItem.url" class="text-decoration-none">{{ articleItem.title }}</router-link>
           </h2>
-          <p class="blog-post-meta">January 1, 2021 by <a href="#">Mark</a></p>
+          <p class="blog-post-meta d-flex align-items-center">
+            <img src="https://github.com/mdo.png" alt="mdo" width="20" height="20"
+              class="rounded-circle me-2  cursor-pointer" @mouseenter="showPopover" @mouseleave="hidePopover"
+              ref="avatar" data-bs-toggle="popover" data-bs-html="true" :data-bs-content="popoverContent"
+              data-bs-placement="bottom">
+            <span class="me-2 cursor-pointer" style="font-weight: bold" @mouseenter="showPopover"
+              @mouseleave="hidePopover" ref="name" data-bs-toggle="popover" data-bs-html="true"
+              :data-bs-content="popoverContent" data-bs-placement="bottom">{{ articleItem.author }}</span>
+            <span>{{ formattedDate(articleItem.publishedDate) }}</span>
+          </p>
 
-          <p>This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic
-            typography, lists, tables, images, code, and more are all supported as expected.</p>
-          <p>This is some additional paragraph placeholder content. It has been written to fill the available space and
-            show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the
-            demonstration flowing, so be on the lookout for this exact same string of text.</p>
-        </article>
-
-        <article class="blog-post border-bottom">
-          <h2 class="display-5 link-body-emphasis mb-3 mt-3">
-            <router-link to="/post/article" class="text-decoration-none">Another blog post</router-link>
-          </h2>
-          <p class="blog-post-meta">December 23, 2020 by <a href="#">Jacob</a></p>
-
-          <p>This is some additional paragraph placeholder content. It has been written to fill the available space and
-            show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the
-            demonstration flowing, so be on the lookout for this exact same string of text.</p>
-          <blockquote>
-            <p>Longer quote goes here, maybe with some <strong>emphasized text</strong> in the middle of it.</p>
-          </blockquote>
-          <p>This is some additional paragraph placeholder content. It has been written to fill the available space and
-            show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the
-            demonstration flowing, so be on the lookout for this exact same string of text.</p>
-          <p>This is some additional paragraph placeholder content. It's a slightly shorter version of the other highly
-            repetitive body text used throughout.</p>
-        </article>
-        <article class="blog-post border-bottom">
-          <h2 class="display-5 link-body-emphasis mb-3 mt-3">
-            <router-link to="/post/article" class="text-decoration-none">New feature</router-link>
-          </h2>
-          <p class="blog-post-meta">December 14, 2020 by <a href="#">Chris</a></p>
-          <p>This is some additional paragraph placeholder content. It has been written to fill the available space and
-            show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the
-            demonstration flowing, so be on the lookout for this exact same string of text.</p>
-          <p>This is some additional paragraph placeholder content. It's a slightly shorter version of the other highly
-            repetitive body text used throughout.</p>
+          <p>{{ articleItem.content }}</p>
         </article>
 
         <nav aria-label="Page navigation example">
@@ -184,5 +228,9 @@ import AppSiderbar from '../components/Siderbar.vue'
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>

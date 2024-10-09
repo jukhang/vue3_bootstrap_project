@@ -1,42 +1,23 @@
 <script setup>
 
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
+
+const router = useRouter()
 
 defineOptions({
   name: 'AppHeader'
 });
 
 const isLoggedIn = ref(false);  // 响应式变量
-const username = ref('')
-const password = ref('')
-
-// 处理登录请求
-const handleLogin = async () => {
-  try {
-    // 发起 POST 请求，假设接口为 '/api/login'
-    const response = await axios.post('/api/login', {
-      username: username.value,
-      password: password.value,
-    })
-
-    if (response.data.success) {
-      // 如果登录成功，更新登录状态并保存 token
-      isLoggedIn.value = true
-      localStorage.setItem('token', response.data.token)
-    } else {
-      alert('登录失败，请检查用户名或密码')
-    }
-  } catch (error) {
-    console.error('登录请求失败', error)
-    alert('登录请求失败，请稍后再试')
-  }
-}
 
 // 处理登出请求
 const handleLogout = () => {
   isLoggedIn.value = false
   localStorage.removeItem('token')
+  // 跳转到登录页面或首页
+  router.push('/')
 }
 
 // 检查本地存储中的 token 是否存在，决定是否自动登录
@@ -155,11 +136,44 @@ if (localStorage.getItem('token')) {
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="#">Premium</a></li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <svg fill="#FFC61B" height="24" width="24" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 358.973 358.973" xml:space="preserve"
+                  stroke="#FFC61B" class="me-2">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M331.537,298.998l-42.512-73.064c6.585-2.14,13.188-5.013,16.661-11.007c4.23-7.303,2.131-16.329,0.28-24.294 c-1.227-5.278-2.496-10.736-1.582-14.355c0.985-3.898,4.782-8.26,8.454-12.478c5.447-6.258,11.08-12.729,11.08-20.749 c0-7.757-5.763-15.122-11.337-22.245c-3.812-4.871-7.752-9.908-8.761-13.872c-0.921-3.621,0.338-9.082,1.555-14.363 c1.837-7.967,3.919-16.997-0.325-24.292c-4.244-7.295-13.123-9.947-20.957-12.288c-5.192-1.552-10.561-3.156-13.253-5.746 c-2.86-2.753-4.731-8.199-6.54-13.467c-2.735-7.962-5.563-16.194-12.752-20.038c-2.638-1.41-5.624-2.096-9.13-2.096 c-4.787,0-9.793,1.301-14.634,2.559c-4.433,1.152-8.619,2.241-12.137,2.241c-1.004,0-1.877-0.088-2.668-0.27 c-3.804-0.877-8.175-4.604-12.403-8.207C194.251,5.576,187.709,0,179.626,0c-9.939,0-22.043,9.695-30.052,16.111 c-1.657,1.327-3.68,2.947-4.562,3.523c-0.676,0.121-1.428,0.182-2.243,0.182c-3.511,0.001-7.688-1.077-12.109-2.218 c-4.826-1.246-9.816-2.533-14.588-2.533c-3.528,0-6.531,0.691-9.178,2.113c-7.182,3.858-9.995,12.096-12.715,20.063 c-1.799,5.271-3.66,10.721-6.514,13.478c-2.688,2.596-8.054,4.21-13.244,5.771c-7.83,2.355-16.704,5.024-20.936,12.327 c-4.23,7.303-2.131,16.328-0.28,24.291c1.228,5.278,2.497,10.737,1.583,14.361c-0.917,3.63-4.621,8.096-8.203,12.414 c-5.546,6.686-11.832,14.263-11.832,23.115c0,8.029,5.652,14.494,11.119,20.746c3.68,4.209,7.484,8.561,8.475,12.453 c0.921,3.62-0.338,9.081-1.555,14.361c-1.837,7.967-3.919,16.997,0.326,24.295c3.593,6.175,10.353,8.976,16.979,11.077 L27.424,299.58c-2.405,4.149-2.679,8.544-0.753,12.055c1.926,3.512,5.779,5.642,10.573,5.845l30.821,1.284 c4.619,0.194,11.072,3.933,13.537,7.842l16.447,26.099c2.511,3.983,6.205,6.269,10.136,6.269c4.081,0,7.826-2.424,10.275-6.651 c0.4-0.69,35.314-60.969,44.059-76.059c4.378,3.188,11.18,7.165,17.86,7.165c6.158,0,11.449-3.183,16.308-7.016 c3.919,6.752,14.594,25.292,43.91,75.682c2.452,4.215,6.194,6.824,10.268,6.824c0.001,0,0.001,0,0.001,0 c3.937,0,7.633-2.482,10.141-6.478l16.4-26.223c2.461-3.916,8.906-7.715,13.523-7.916l30.819-1.367 c4.792-0.21,8.641-2.358,10.562-5.872C334.231,307.547,333.949,303.143,331.537,298.998z M220.184,178.367l3.724,21.711 c0.499,2.913,0.071,4.665-0.447,5.279c-0.098,0.116-0.326,0.388-1.207,0.388c-0.655,0-2.084-0.175-4.301-1.34l-19.499-10.251 c-5.048-2.653-11.673-4.115-18.655-4.115c-6.982,0-13.607,1.462-18.654,4.115l-19.499,10.251c-2.216,1.165-3.647,1.34-4.301,1.34 c-0.88,0-1.109-0.271-1.207-0.387c-0.518-0.614-0.946-2.366-0.446-5.279l3.724-21.713c1.997-11.647-3.067-27.233-11.529-35.481 l-15.775-15.377c-2.365-2.306-2.911-4.103-2.701-4.748c0.209-0.645,1.707-1.777,4.976-2.252l21.801-3.168 c11.695-1.699,24.953-11.332,30.183-21.929l9.749-19.755c1.461-2.961,3.001-4.036,3.68-4.036c0.678,0,2.218,1.075,3.68,4.036 l9.75,19.755c5.23,10.597,18.488,20.229,30.183,21.929l21.8,3.168c3.268,0.475,4.767,1.608,4.976,2.252 c0.21,0.645-0.337,2.442-2.702,4.748l-15.774,15.376C223.25,151.133,218.186,166.719,220.184,178.367z" />
+                  </g>
+                </svg>
+                会员
+              </a>
+            </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
+            <li><a @click="handleLogout" class="dropdown-item">
+                <svg fill="#000000" width="24" height="24" viewBox="0 0 24 24" id="sign-out-double-arrow"
+                  data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line me-2">
+                  <polyline id="primary" points="18 9 21 12 18 15"
+                    style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                  </polyline>
+                  <polyline id="primary-2" data-name="primary" points="13 9 16 12 13 15"
+                    style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                  </polyline>
+                  <line id="primary-3" data-name="primary" x1="16" y1="12" x2="7" y2="12"
+                    style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                  </line>
+                  <path id="primary-4" data-name="primary"
+                    d="M14,19v1a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V4A1,1,0,0,1,4,3h9a1,1,0,0,1,1,1V5"
+                    style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                  </path>
+                </svg>
+                退出
+              </a>
+            </li>
           </ul>
         </div>
       </div>

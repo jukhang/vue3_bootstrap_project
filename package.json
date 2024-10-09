@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@calumk/editorjs-codecup": "^1.2.0",
-    "@calumk/editorjs-codeflask": "^1.0.10",
     "@editorjs/checklist": "^1.6.0",
     "@editorjs/code": "^2.9.2",
     "@editorjs/delimiter": "^1.4.2",
