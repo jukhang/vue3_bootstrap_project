@@ -15,7 +15,6 @@ defineOptions({
             </div>
 
             <div class="p-4 mb-3 bg-body-tertiary sidebar-section ">
-                <!-- <h4 class="fst-italic">Elsewhere</h4> -->
                 <ol class="list-unstyled mb-0">
                     <button type="button" class="btn btn-secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -25,9 +24,6 @@ defineOptions({
                             </path>
                         </svg>
                     </button>
-                    <!-- <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li> -->
                 </ol>
             </div>
 
@@ -72,7 +68,7 @@ defineOptions({
 
 <style scoped>
 .sidebar-section {
-    background-color: #ecf8f6 !important;
+    background-color: rgb(250, 250, 250) !important;
     border-radius: 15px !important;
 }
 

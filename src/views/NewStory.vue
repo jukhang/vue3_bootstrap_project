@@ -111,11 +111,8 @@ onMounted(() => {
         class: ImageTool,
         config: {
           endpoints: {
-            byFile: '', // Your backend file uploader endpoint
-            byUrl: '', // Your endpoint that provides uploading by Url
-          },
-          additionalRequestData: {
-            // 比如 Laravel 的 csrf_token： '_token': '',
+            byFile: 'http://localhost:8000/api/v1/upload-file', // Your backend file uploader endpoint
+            byUrl: 'http://localhost:8000/api/v1/fetch-url', // Your endpoint that provides uploading by Url
           },
         },
         shortcut: 'CMD+SHIFT+I',
