@@ -8,6 +8,9 @@ import { ref, onMounted } from 'vue';
 import { Popover } from 'bootstrap';
 import axios from 'axios';
 
+const page = ref(1);
+const loading = ref(false);
+
 const popoverContent = `
   <div>
     <div class="d-flex align-items-center">
@@ -57,7 +60,7 @@ const articles = ref([]); // 存储多篇文章数据
 // 获取文章数据
 const fetchArticles = async () => {
   try {
-    const response = await axios.get('http://localhost:8000/api/v1/articles'); // 根据实际接口调整
+    const response = await axios.get('http://10.8.8.128:8000/api/v1/articles'); // 根据实际接口调整
     articles.value = response.data.data; // 假设返回的是文章数组
   } catch (error) {
     console.error('Error fetching articles:', error);
@@ -189,7 +192,9 @@ onMounted(() => {
           <p>{{ articleItem.content }}</p>
         </article>
 
-        <nav aria-label="Page navigation example">
+        <div ref="bottomObserver" class="observer"></div>
+
+        <!-- <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center mt-3">
             <li class="page-item disabled">
               <a class="page-link">Previous</a>
@@ -201,7 +206,7 @@ onMounted(() => {
               <a class="page-link" href="#">Next</a>
             </li>
           </ul>
-        </nav>
+        </nav> -->
 
       </div>
 
@@ -232,5 +237,12 @@ onMounted(() => {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.border-dashed {
+  border: none;
+  /* border-bottom: 2px dashed #bdbdbd; */
+  border-bottom: 3px dotted #bdbdbd;
+  margin: 20px 0;
 }
 </style>

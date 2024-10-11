@@ -28,7 +28,7 @@ if (localStorage.getItem('token')) {
 
 <template>
 
-  <header class="p-3 mb-3 border-bottom">
+  <header class="py-2 mb-3 border-bottom">
 
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <router-link to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
@@ -54,7 +54,6 @@ if (localStorage.getItem('token')) {
         <button type="button"
           class="btn btn-outline-dark col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
           @click="$router.push('/login')">登录</button>
-        <!-- <button type="button" class="btn btn-outline-dark col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" @click="$router.push('/signup')">注册</button> -->
       </div>
       <div v-else class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" @click=" $router.push('/new-story')">
@@ -86,7 +85,7 @@ if (localStorage.getItem('token')) {
             </g>
           </svg>
         </div>
-        <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <div class="col-12 col-lg-auto mb-3 mb-lg-0">
           <a href="#" class="" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle img-zoom">
           </a>
@@ -183,12 +182,4 @@ if (localStorage.getItem('token')) {
 </template>
 
 
-<style scoped>
-.img-zoom {
-  transition: transform 0.3s ease;
-}
-
-.img-zoom:hover {
-  transform: scale(1.3);
-}
-</style>
+<style scoped></style>
