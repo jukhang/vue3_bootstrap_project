@@ -60,7 +60,7 @@ const articles = ref([]); // 存储多篇文章数据
 // 获取文章数据
 const fetchArticles = async () => {
   try {
-    const response = await axios.get('http://10.8.8.128:8000/api/v1/articles'); // 根据实际接口调整
+    const response = await axios.get('http://localhost:8000/api/v1/articles'); // 根据实际接口调整
     articles.value = response.data.data; // 假设返回的是文章数组
   } catch (error) {
     console.error('Error fetching articles:', error);
@@ -88,7 +88,7 @@ onMounted(() => {
 
     <AppHeader />
 
-    <div class="p-4 p-md-5 mb-4 mt-4 custom_rounded text-body-emphasis bg-body-secondary  blog-cover">
+    <div class="p-4 p-md-5 mb-4 mt-4 custom_rounded text-body-emphasis bg-body-secondary blog-cover">
       <div class="col-lg-12 px-0">
         <h1 class="">How build high-quality system with best practices.</h1>
         <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently
