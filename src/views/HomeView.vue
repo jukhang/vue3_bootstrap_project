@@ -179,13 +179,11 @@ onMounted(() => {
             <router-link :to="articleItem.url" class="text-decoration-none">{{ articleItem.title }}</router-link>
           </h2>
           <p class="blog-post-meta d-flex align-items-center">
-            <img src="https://github.com/mdo.png" alt="mdo" width="20" height="20"
-              class="rounded-circle me-2  cursor-pointer" @mouseenter="showPopover" @mouseleave="hidePopover"
-              ref="avatar" data-bs-toggle="popover" data-bs-html="true" :data-bs-content="popoverContent"
-              data-bs-placement="bottom">
-            <span class="me-2 cursor-pointer" style="font-weight: bold" @mouseenter="showPopover"
-              @mouseleave="hidePopover" ref="name" data-bs-toggle="popover" data-bs-html="true"
-              :data-bs-content="popoverContent" data-bs-placement="bottom">{{ articleItem.author }}</span>
+            <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle me-2"
+              ref="avatar">
+            <router-link :to="`${articleItem.author}`" class="me-2 cursor-pointer">
+              {{ articleItem.author }}
+            </router-link>
             <span>{{ formattedDate(articleItem.publishedDate) }}</span>
           </p>
 
@@ -237,6 +235,9 @@ onMounted(() => {
 
 .cursor-pointer {
   cursor: pointer;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .border-dashed {

@@ -13,8 +13,10 @@ const username = ref('')
 
 onMounted(() => {
     // 检查路由参数
-    if (router.params.username) {
+    if (router?.params?.username) {
         username.value = router.params.username // 获取用户名
+    } else {
+        username.value = null // 如果路由参数不存在，设置为 null
     }
 })
 
