@@ -1,15 +1,14 @@
 <script setup>
+defineOptions({
+  name: 'AppHeader'
+});
 
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 const router = useRouter()
-
-defineOptions({
-  name: 'AppHeader'
-});
-
+const username = ref('')
 const isLoggedIn = ref(false);  // 响应式变量
 
 // 处理登出请求
@@ -24,6 +23,13 @@ const handleLogout = () => {
 if (localStorage.getItem('token')) {
   isLoggedIn.value = true
 }
+
+onMounted(() => {
+  const storedUsername = localStorage.getItem('username')
+  if (storedUsername) {
+    username.value = storedUsername // 将用户名赋值给响应式变量
+  }
+})
 </script>
 
 <template>
@@ -91,7 +97,7 @@ if (localStorage.getItem('token')) {
           </a>
           <ul class="dropdown-menu mt-3 text-small" aria-labelledby="navbarDropdownMenuLink">
             <li>
-              <a class="dropdown-item" href="#">
+              <router-link class="dropdown-item" :to="`/${username}`">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                   class="me-2">
                   <path
@@ -99,7 +105,7 @@ if (localStorage.getItem('token')) {
                     stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 主页
-              </a>
+              </router-link>
             </li>
             <li>
               <a class="dropdown-item" href="#">

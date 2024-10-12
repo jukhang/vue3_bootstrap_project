@@ -4,6 +4,7 @@ import NewStory from '@/views/NewStory.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import ArticleView from '@/views/ArticleView.vue'
+import UserHomeView from '@/views/UserHomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       name: 'post',
       component: ArticleView,
       props: true, // 传递路由参数
+    },
+    {
+      path: '/:username', // 动态路由，使用用户名作为参数
+      name: '用户首页',
+      component: UserHomeView,
     },
     {
       path: '/new-story',
