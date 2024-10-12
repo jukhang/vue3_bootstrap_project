@@ -15,7 +15,7 @@ import ScrollSticky from "../components/ScrollSticky.vue";
         <AppHeader />
 
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <!-- 封面图片 -->
                 <div class="text-center mb-4">
                     <img src="/article_cover.jpeg" alt="封面图片" class="img-fluid custom_rounded article-cover-image">
