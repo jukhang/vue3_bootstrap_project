@@ -181,7 +181,7 @@ onMounted(() => {
           <p class="blog-post-meta d-flex align-items-center">
             <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle me-2"
               ref="avatar">
-            <router-link :to="`${articleItem.author}`" class="me-2 cursor-pointer">
+            <router-link :to="`/u/${articleItem.author}`" class="me-2 cursor-pointer">
               {{ articleItem.author }}
             </router-link>
             <span>{{ formattedDate(articleItem.publishedDate) }}</span>
@@ -219,7 +219,7 @@ onMounted(() => {
 .text-decoration-none {
   font-size: 36px !important;
   color: #000000 !important;
-  font-weight: bold !important;
+  font-weight: 600 !important;
 }
 
 .blog-cover {
@@ -237,7 +237,7 @@ onMounted(() => {
   cursor: pointer;
   color: black;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .border-dashed {

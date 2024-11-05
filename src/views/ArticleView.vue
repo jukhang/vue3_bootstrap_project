@@ -22,12 +22,12 @@ import ScrollSticky from "../components/ScrollSticky.vue";
                 </div>
 
                 <!-- 文章标题 -->
-                <h2 class="display-8 fw-bold mb-3">
+                <h2 class="display-8 fw-bold">
                     使用 Bootstrap 5 实现 Medium 风格的文章页面
                 </h2>
 
                 <!-- 作者信息 -->
-                <div class="d-flex align-items-center py-3">
+                <div class="d-flex align-items-center py-2">
                     <img src="https://github.com/mdo.png" alt="作者头像" width="50" height="50" class="rounded-circle me-3">
                     <div>
                         <h6 class="mb-0">作者：张三</h6>
@@ -40,8 +40,8 @@ import ScrollSticky from "../components/ScrollSticky.vue";
                     <div class="d-flex justify-content-between align-items-center border-top border-bottom py-3">
                         <!-- 标签 -->
                         <div>
-                            <span class="badge bg-primary me-2">Bootstrap</span>
-                            <span class="badge bg-secondary me-2">Vue</span>
+                            <span class="badge bg-primary me-1">Bootstrap</span>
+                            <span class="badge bg-secondary me-1">Vue</span>
                             <span class="badge bg-info text-dark">前端开发</span>
                         </div>
 

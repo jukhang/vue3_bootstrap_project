@@ -4,10 +4,12 @@ defineOptions({
 });
 
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import axios from 'axios';
 
-const router = useRouter()
+const router = useRouter();
+const route = useRoute();
+
 const username = ref('')
 const isLoggedIn = ref(false);  // 响应式变量
 
@@ -15,6 +17,7 @@ const isLoggedIn = ref(false);  // 响应式变量
 const handleLogout = () => {
   isLoggedIn.value = false
   localStorage.removeItem('token')
+  localStorage.removeItem('username')
   // 跳转到登录页面或首页
   router.push('/')
 }
@@ -30,7 +33,9 @@ onMounted(() => {
     username.value = storedUsername // 将用户名赋值给响应式变量
   } else {
     username.value = null
+
   }
+  console.log('Header中删除: ', username.value)
 })
 </script>
 
@@ -99,7 +104,7 @@ onMounted(() => {
           </a>
           <ul class="dropdown-menu mt-3 text-small" aria-labelledby="navbarDropdownMenuLink">
             <li>
-              <router-link class="dropdown-item" :to="`/${username}`">
+              <router-link class="dropdown-item" :to="`/u/${username}`">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                   class="me-2">
                   <path
