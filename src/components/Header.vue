@@ -33,9 +33,7 @@ onMounted(() => {
     username.value = storedUsername // 将用户名赋值给响应式变量
   } else {
     username.value = null
-
   }
-  console.log('Header中删除: ', username.value)
 })
 </script>
 

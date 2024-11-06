@@ -6,29 +6,75 @@
         <router-link to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
           <img src="/header.png" alt="Logo" width="180" height="60">
         </router-link>
-
         <div class="ms-auto">
           <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <button button class="btn btn-outline-dark col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" type="button"
-              id="submit" :disabled="true">
+            <button button class="btn btn-outline-custom col-12 col-lg-auto mb-lg-0  me-lg-1" type="button"
+              @click="submitData" :disabled="isSubmitDisabled">
               提交
             </button>
-            <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="24" height="24" fill="white" />
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M17.5 13C18.1814 13 18.7678 12.9988 19.2443 13.0473C19.7375 13.0974 20.2228 13.209 20.6667 13.5056C20.9943 13.7245 21.2755 14.0057 21.4944 14.3333C21.791 14.7772 21.9026 15.2625 21.9527 15.7557C22.0001 16.2209 22 16.7907 22 17.4514C22 18.0483 22.0132 18.6497 21.9527 19.2443C21.9026 19.7375 21.791 20.2228 21.4944 20.6667C21.2755 20.9943 20.9943 21.2755 20.6667 21.4944C20.2228 21.791 19.7375 21.9026 19.2443 21.9527C18.7791 22.0001 18.2093 22 17.5486 22C16.9517 22 16.3503 22.0132 15.7557 21.9527C15.2625 21.9026 14.7772 21.791 14.3333 21.4944C14.0057 21.2755 13.7245 20.9943 13.5056 20.6667C13.209 20.2228 13.0974 19.7375 13.0473 19.2443C12.9988 18.7678 13 18.1814 13 17.5C13 16.8186 12.9988 16.2322 13.0473 15.7557C13.0974 15.2625 13.209 14.7772 13.5056 14.3333C13.7245 14.0057 14.0057 13.7245 14.3333 13.5056C14.7772 13.209 15.2625 13.0974 15.7557 13.0473C16.2322 12.9988 16.8186 13 17.5 13Z"
-                  fill="#323232" />
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M6.5 13C7.18141 13 7.76776 12.9988 8.24428 13.0473C8.73752 13.0974 9.22279 13.209 9.66671 13.5056C9.99428 13.7245 10.2755 14.0057 10.4944 14.3333C10.791 14.7772 10.9026 15.2625 10.9527 15.7557C11.0001 16.2209 11 16.7907 11 17.4514C11 18.0483 11.0132 18.6497 10.9527 19.2443C10.9026 19.7375 10.791 20.2228 10.4944 20.6667C10.2755 20.9943 9.99428 21.2755 9.66671 21.4944C9.22279 21.791 8.73752 21.9026 8.24428 21.9527C7.77912 22.0001 7.20932 22 6.54857 22C5.95171 22 5.35034 22.0132 4.75572 21.9527C4.26248 21.9026 3.77721 21.791 3.33329 21.4944C3.00572 21.2755 2.72447 20.9943 2.50559 20.6667C2.20898 20.2228 2.09745 19.7375 2.04727 19.2443C1.99879 18.7678 2 18.1814 2 17.5C2 16.8186 1.99879 16.2322 2.04727 15.7557C2.09745 15.2625 2.20898 14.7772 2.50559 14.3333C2.72447 14.0057 3.00572 13.7245 3.33329 13.5056C3.77721 13.209 4.26248 13.0974 4.75572 13.0473C5.23225 12.9988 5.81858 13 6.5 13Z"
-                  fill="#323232" />
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M6.5 2C7.18141 2 7.76776 1.99879 8.24428 2.04727C8.73752 2.09745 9.22279 2.20898 9.66671 2.50559C9.99428 2.72447 10.2755 3.00572 10.4944 3.33329C10.791 3.77721 10.9026 4.26248 10.9527 4.75572C11.0001 5.22089 11 5.79069 11 6.45143C11 7.04829 11.0132 7.64966 10.9527 8.24428C10.9026 8.73752 10.791 9.22279 10.4944 9.66671C10.2755 9.99428 9.99428 10.2755 9.66671 10.4944C9.22279 10.791 8.73752 10.9026 8.24428 10.9527C7.77912 11.0001 7.20932 11 6.54857 11C5.95171 11 5.35034 11.0132 4.75572 10.9527C4.26248 10.9026 3.77721 10.791 3.33329 10.4944C3.00572 10.2755 2.72447 9.99428 2.50559 9.66671C2.20898 9.22279 2.09745 8.73752 2.04727 8.24428C1.99879 7.76776 2 7.18142 2 6.5C2 5.81858 1.99879 5.23225 2.04727 4.75572C2.09745 4.26248 2.20898 3.77721 2.50559 3.33329C2.72447 3.00572 3.00572 2.72447 3.33329 2.50559C3.77721 2.20898 4.26248 2.09745 4.75572 2.04727C5.23225 1.99879 5.81858 2 6.5 2Z"
-                  fill="#323232" />
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M18.5 3C18.5 2.44772 18.0523 2 17.5 2C16.9477 2 16.5 2.44772 16.5 3V5.5H14C13.4477 5.5 13 5.94772 13 6.5C13 7.05228 13.4477 7.5 14 7.5H16.5V10C16.5 10.5523 16.9477 11 17.5 11C18.0523 11 18.5 10.5523 18.5 10V7.5H21C21.5523 7.5 22 7.05228 22 6.5C22 5.94772 21.5523 5.5 21 5.5H18.5V3Z"
-                  fill="#323232" />
-              </svg>
+            <div class="col-12 col-lg-auto mb-lg-0 me-lg-1">
+              <button class="btn custom-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="24" height="24" fill="white" />
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M17.5 13C18.1814 13 18.7678 12.9988 19.2443 13.0473C19.7375 13.0974 20.2228 13.209 20.6667 13.5056C20.9943 13.7245 21.2755 14.0057 21.4944 14.3333C21.791 14.7772 21.9026 15.2625 21.9527 15.7557C22.0001 16.2209 22 16.7907 22 17.4514C22 18.0483 22.0132 18.6497 21.9527 19.2443C21.9026 19.7375 21.791 20.2228 21.4944 20.6667C21.2755 20.9943 20.9943 21.2755 20.6667 21.4944C20.2228 21.791 19.7375 21.9026 19.2443 21.9527C18.7791 22.0001 18.2093 22 17.5486 22C16.9517 22 16.3503 22.0132 15.7557 21.9527C15.2625 21.9026 14.7772 21.791 14.3333 21.4944C14.0057 21.2755 13.7245 20.9943 13.5056 20.6667C13.209 20.2228 13.0974 19.7375 13.0473 19.2443C12.9988 18.7678 13 18.1814 13 17.5C13 16.8186 12.9988 16.2322 13.0473 15.7557C13.0974 15.2625 13.209 14.7772 13.5056 14.3333C13.7245 14.0057 14.0057 13.7245 14.3333 13.5056C14.7772 13.209 15.2625 13.0974 15.7557 13.0473C16.2322 12.9988 16.8186 13 17.5 13Z"
+                    fill="#323232" />
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M6.5 13C7.18141 13 7.76776 12.9988 8.24428 13.0473C8.73752 13.0974 9.22279 13.209 9.66671 13.5056C9.99428 13.7245 10.2755 14.0057 10.4944 14.3333C10.791 14.7772 10.9026 15.2625 10.9527 15.7557C11.0001 16.2209 11 16.7907 11 17.4514C11 18.0483 11.0132 18.6497 10.9527 19.2443C10.9026 19.7375 10.791 20.2228 10.4944 20.6667C10.2755 20.9943 9.99428 21.2755 9.66671 21.4944C9.22279 21.791 8.73752 21.9026 8.24428 21.9527C7.77912 22.0001 7.20932 22 6.54857 22C5.95171 22 5.35034 22.0132 4.75572 21.9527C4.26248 21.9026 3.77721 21.791 3.33329 21.4944C3.00572 21.2755 2.72447 20.9943 2.50559 20.6667C2.20898 20.2228 2.09745 19.7375 2.04727 19.2443C1.99879 18.7678 2 18.1814 2 17.5C2 16.8186 1.99879 16.2322 2.04727 15.7557C2.09745 15.2625 2.20898 14.7772 2.50559 14.3333C2.72447 14.0057 3.00572 13.7245 3.33329 13.5056C3.77721 13.209 4.26248 13.0974 4.75572 13.0473C5.23225 12.9988 5.81858 13 6.5 13Z"
+                    fill="#323232" />
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M6.5 2C7.18141 2 7.76776 1.99879 8.24428 2.04727C8.73752 2.09745 9.22279 2.20898 9.66671 2.50559C9.99428 2.72447 10.2755 3.00572 10.4944 3.33329C10.791 3.77721 10.9026 4.26248 10.9527 4.75572C11.0001 5.22089 11 5.79069 11 6.45143C11 7.04829 11.0132 7.64966 10.9527 8.24428C10.9026 8.73752 10.791 9.22279 10.4944 9.66671C10.2755 9.99428 9.99428 10.2755 9.66671 10.4944C9.22279 10.791 8.73752 10.9026 8.24428 10.9527C7.77912 11.0001 7.20932 11 6.54857 11C5.95171 11 5.35034 11.0132 4.75572 10.9527C4.26248 10.9026 3.77721 10.791 3.33329 10.4944C3.00572 10.2755 2.72447 9.99428 2.50559 9.66671C2.20898 9.22279 2.09745 8.73752 2.04727 8.24428C1.99879 7.76776 2 7.18142 2 6.5C2 5.81858 1.99879 5.23225 2.04727 4.75572C2.09745 4.26248 2.20898 3.77721 2.50559 3.33329C2.72447 3.00572 3.00572 2.72447 3.33329 2.50559C3.77721 2.20898 4.26248 2.09745 4.75572 2.04727C5.23225 1.99879 5.81858 2 6.5 2Z"
+                    fill="#323232" />
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M18.5 3C18.5 2.44772 18.0523 2 17.5 2C16.9477 2 16.5 2.44772 16.5 3V5.5H14C13.4477 5.5 13 5.94772 13 6.5C13 7.05228 13.4477 7.5 14 7.5H16.5V10C16.5 10.5523 16.9477 11 17.5 11C18.0523 11 18.5 10.5523 18.5 10V7.5H21C21.5523 7.5 22 7.05228 22 6.5C22 5.94772 21.5523 5.5 21 5.5H18.5V3Z"
+                    fill="#323232" />
+                </svg>
+              </button>
+              <!-- Offcanvas 组件 -->
+              <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header border-bottom mb-3">
+                  <h5 id="offcanvasRightLabel" class="fw-bold">文章设置</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                  <!-- 发布状态设置 -->
+                  <div class="settings-card">
+                    <h6>发布状态</h6>
+                    <div class="form-check form-switch mb-3">
+                      <input class="form-check-input" type="checkbox" id="saveAsDraft">
+                      <label class="form-check-label" for="saveAsDraft">保存为草稿</label>
+                    </div>
+                    <small class="text-muted">草稿不会公开显示，可以随时编辑</small>
+                  </div>
+
+                  <!-- 付费设置 -->
+                  <div class="settings-card">
+                    <h6>付费设置</h6>
+                    <div class="form-check form-switch mb-3">
+                      <input class="form-check-input" type="checkbox" id="paidArticle">
+                      <label class="form-check-label" for="paidArticle">设为付费文章</label>
+                    </div>
+                  </div>
+
+                  <!-- 标签设置 -->
+                  <div class="settings-card">
+                    <h6>文章标签</h6>
+                    <div class="mb-3">
+                      <input type="text" class="form-control mb-2" v-model="newTag" @keyup.enter="addTag"
+                        placeholder="输入标签后按回车添加" :disabled="tags.length >= 5">
+                      <div class="tag-container">
+                        <span v-for="tag in tags" :key="tag" class="tag-badge">
+                          {{ tag }}
+                          <i class="close-icon" @click="removeTag(tag)" role="button">x</i>
+                        </span>
+                      </div>
+                    </div>
+                    <small class="text-muted">最多可添加5个标签</small>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
               <svg fill="#000000" height="26" width="26" version="1.2" baseProfile="tiny" id="Layer_1"
@@ -156,7 +202,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 
 import EditorJS from '@editorjs/editorjs';
@@ -177,6 +223,22 @@ import editorjsCodecup from '@calumk/editorjs-codecup';
 
 const editor = ref(null);
 const isSubmitDisabled = ref(true);
+
+const newTag = ref(''); // 存储用户输入的标签
+const tags = ref([]); // 默认标签
+
+// 添加标签到列表
+const addTag = () => {
+  if (newTag.value && tags.value.length < 5) {
+    tags.value.push(newTag.value.trim());
+    newTag.value = ''; // 清空输入框
+  }
+};
+
+// 删除标签
+const removeTag = (index) => {
+  tags.value.splice(index, 1); // 根据索引删除标签
+};
 
 onMounted(() => {
   editor.value = new EditorJS({
@@ -291,8 +353,135 @@ onMounted(() => {
     },
   });
 });
+
+const submitData = async () => {
+  try {
+    // 获取编辑器的数据
+    const data = await editor.value.save();
+    const token = localStorage.getItem('token');
+
+    // 打印数据到控制台
+    console.log('Editor Data:', data);
+    console.log('title:', data.blocks[0].data.text);
+    console.log('tags,:', tags.value);
+    console.log('token:', token);
+
+
+    // 提交数据到后端
+    const response = await fetch('http://localhost:8000/api/v1/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Authorization': `Bearer ${token}`, // 在请求头中携带 token
+      },
+      body: JSON.stringify(data), // 提交编辑器的数据
+    });
+
+    if (response.ok) {
+      console.log('数据提交成功');
+    } else {
+      console.log('数据提交失败');
+    }
+  } catch (error) {
+    console.error('提交失败:', error);
+  }
+};
+
 </script>
 
-<style>
-/* Add your styles here */
+<style scoped>
+.btn-outline-custom {
+  border-color: #007bff;
+  color: #007bff;
+  border-width: 2px;
+}
+
+.btn-outline-custom:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-outline-custom:focus {
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.5);
+}
+
+.btn-outline-custom:active {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  color: white;
+}
+
+.custom-btn {
+  border: none;
+  box-shadow: none;
+  /* background: rgba(255, 255, 255, 0.2); */
+  backdrop-filter: blur(10px);
+  /* border: 1px solid rgba(255, 255, 255, 0.1); */
+  padding: 8px 16px;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.custom-btn:focus {
+  outline: none;
+}
+
+.custom-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.offcanvas {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.settings-card {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.settings-card h6 {
+  color: #444;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.tag-badge {
+  background: rgba(13, 110, 253, 0.1);
+  color: #0d6efd;
+  margin: 0 5px 5px 0;
+  padding: 5px 10px;
+  border-radius: 15px;
+  display: inline-block;
+  font-size: 0.9rem;
+}
+
+.form-switch .form-check-input {
+  width: 2em;
+}
+
+.form-switch .form-check-input:checked {
+  background-color: #198754;
+  border-color: #198754;
+}
+
+
+.close-icon {
+  cursor: pointer;
+  font-size: 0.8rem;
+  /* line-height: 1; */
+  font-weight: bold;
+  padding: 0 5px;
+  margin-right: -5px;
+  vertical-align: super;
+}
+
+.close-icon:hover {
+  color: #dc3545;
+}
 </style>
