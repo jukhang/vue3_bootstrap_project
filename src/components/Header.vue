@@ -39,7 +39,7 @@ onMounted(() => {
 
 <template>
 
-  <header class="py-2 mb-3 border-bottom">
+  <header class="py-2 mb-3 border-bottom" style="cursor: pointer">
 
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <router-link to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">

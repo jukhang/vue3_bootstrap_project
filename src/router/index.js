@@ -49,11 +49,11 @@ const router = createRouter({
       name: 'Register',
       component: RegisterView
     },
-    // {
-    //   path: '/404', // 动态路由，使用用户名作为参数
-    //   name: '404',
-    //   component: NotFoundView,
-    // },
+    {
+      path: '/404', // 动态路由，使用用户名作为参数
+      name: '404',
+      component: NotFoundView,
+    },
     // {
     //   path: '/:pathMatch(.*)*', // 通配符路径捕获所有未匹配路由
     //   redirect: '/404'

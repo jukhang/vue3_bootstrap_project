@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <header class="py-2 mb-3 border-bottom">
+    <header class="py-2 mb-3 border-bottom" style="cursor: pointer">
 
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <router-link to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
@@ -202,8 +202,33 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { onBeforeMount, onMounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+const isLoggedIn = ref(false);  // 响应式变量
+
+onBeforeMount(() => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    // 如果 token 不存在，跳转到 404 页面
+    router.push('/404');
+  }
+});
+
+// 处理登出请求
+const handleLogout = () => {
+  isLoggedIn.value = false
+  localStorage.removeItem('token')
+  localStorage.removeItem('username')
+  // 跳转到登录页面或首页
+  router.push('/')
+};
+
+// 检查本地存储中的 token 是否存在，决定是否自动登录
+if (localStorage.getItem('token')) {
+  isLoggedIn.value = true
+}
 
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
@@ -386,7 +411,6 @@ const submitData = async () => {
     console.error('提交失败:', error);
   }
 };
-
 </script>
 
 <style scoped>
