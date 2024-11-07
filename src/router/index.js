@@ -30,11 +30,6 @@ const router = createRouter({
       props: true, // 传递路由参数
     },
     {
-      path: '/u/:username', // 动态路由，使用用户名作为参数
-      name: '用户首页',
-      component: UserHomeView,
-    },
-    {
       path: '/new-story',
       name: 'write',
       component: NewStory
@@ -50,14 +45,27 @@ const router = createRouter({
       component: RegisterView
     },
     {
+      path: '/u/:username', // 动态路由，使用用户名作为参数
+      name: '用户首页',
+      component: UserHomeView,
+      beforeEnter: (to, from, next) => {
+        // 检查 username 参数是否存在
+        if (!to.params.username) {
+          next({ name: '404' })
+        } else {
+          next()
+        }
+      },
+    },
+    {
       path: '/404', // 动态路由，使用用户名作为参数
       name: '404',
       component: NotFoundView,
     },
-    // {
-    //   path: '/:pathMatch(.*)*', // 通配符路径捕获所有未匹配路由
-    //   redirect: '/404'
-    // },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/404'
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     // 始终滚动到顶部
@@ -65,4 +73,14 @@ const router = createRouter({
   }
 })
 
+// 全局导航守卫
+router.beforeEach((to, from, next) => {
+  // 特殊路由处理
+  if (to.path === '/u/' || to.path === '/u') {
+    next('/404')
+    return
+  }
+
+  next()
+})
 export default router

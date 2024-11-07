@@ -23,7 +23,6 @@ const handleLogin = async () => {
             alert('登录失败，请检查用户名或密码')
         }
     } catch (error) {
-        console.error('登录请求失败', error)
         alert('登录请求失败，请稍后再试')
     }
 }

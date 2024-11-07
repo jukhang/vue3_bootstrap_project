@@ -15,10 +15,8 @@ onMounted(() => {
     // 检查路由参数
     if (route?.params?.username) {
         username.value = route.params.username // 获取用户名
-        console.log(username.value)
     } else {
         username.value = null // 如果路由参数不存在，设置为 null
-        console.log('null')
     }
 })
 
