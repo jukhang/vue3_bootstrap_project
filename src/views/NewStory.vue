@@ -43,7 +43,7 @@
                   <div class="settings-card">
                     <h6>发布状态</h6>
                     <div class="form-check form-switch mb-3">
-                      <input class="form-check-input" type="checkbox" id="saveAsDraft">
+                      <input class="form-check-input" type="checkbox" id="saveAsDraft" v-model="isDraft">
                       <label class="form-check-label" for="saveAsDraft">保存为草稿</label>
                     </div>
                     <small class="text-muted">草稿不会公开显示，可以随时编辑</small>
@@ -53,7 +53,7 @@
                   <div class="settings-card">
                     <h6>付费设置</h6>
                     <div class="form-check form-switch mb-3">
-                      <input class="form-check-input" type="checkbox" id="paidArticle">
+                      <input class="form-check-input" type="checkbox" id="paidArticle" v-model="isPay">
                       <label class="form-check-label" for="paidArticle">设为付费文章</label>
                     </div>
                   </div>
@@ -101,7 +101,7 @@
               </a>
               <ul class="dropdown-menu mt-3 text-small" aria-labelledby="navbarDropdownMenuLink">
                 <li>
-                  <a class="dropdown-item" href="#">
+                  <router-link class="dropdown-item" :to="`/u/${username}`">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                       class="me-2">
                       <path
@@ -109,7 +109,7 @@
                         stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     主页
-                  </a>
+                  </router-link>
                 </li>
                 <li>
                   <a class="dropdown-item" href="#">
@@ -205,8 +205,36 @@
 import { onBeforeMount, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
+import EditorJS from '@editorjs/editorjs';
+import Header from '@editorjs/header';
+import Quote from '@editorjs/quote';
+import Delimiter from '@editorjs/delimiter';
+import List from '@editorjs/list';
+import Checklist from '@editorjs/checklist';
+import Warning from '@editorjs/warning';
+import Marker from '@editorjs/marker';
+import CodeTool from '@editorjs/code';
+import InlineCode from '@editorjs/inline-code';
+import LinkTool from '@editorjs/link';
+import Embed from '@editorjs/embed';
+import Table from '@editorjs/table';
+import ImageTool from '@editorjs/image';
+import editorjsCodecup from '@calumk/editorjs-codecup';
+
 const router = useRouter();
+const username = ref('')
 const isLoggedIn = ref(false);  // 响应式变量
+const isDraft = ref(false);  // 响应式变量
+const isPay = ref(false);  // 响应式变量
+
+const getUsername = () => {
+  const storedUsername = localStorage.getItem('username')
+  if (storedUsername) {
+    username.value = storedUsername // 将用户名赋值给响应式变量
+  } else {
+    username.value = null
+  }
+};
 
 onBeforeMount(() => {
   const token = localStorage.getItem('token');
@@ -230,22 +258,6 @@ if (localStorage.getItem('token')) {
   isLoggedIn.value = true
 }
 
-import EditorJS from '@editorjs/editorjs';
-import Header from '@editorjs/header';
-import Quote from '@editorjs/quote';
-import Delimiter from '@editorjs/delimiter';
-import List from '@editorjs/list';
-import Checklist from '@editorjs/checklist';
-import Warning from '@editorjs/warning';
-import Marker from '@editorjs/marker';
-import CodeTool from '@editorjs/code';
-import InlineCode from '@editorjs/inline-code';
-import LinkTool from '@editorjs/link';
-import Embed from '@editorjs/embed';
-import Table from '@editorjs/table';
-import ImageTool from '@editorjs/image';
-import editorjsCodecup from '@calumk/editorjs-codecup';
-
 const editor = ref(null);
 const isSubmitDisabled = ref(true);
 
@@ -266,6 +278,7 @@ const removeTag = (index) => {
 };
 
 onMounted(() => {
+  getUsername();
   editor.value = new EditorJS({
     holder: 'editor',
     autofocus: true,
@@ -382,22 +395,25 @@ onMounted(() => {
 const submitData = async () => {
   try {
     // 获取编辑器的数据
-    const data = await editor.value.save();
+    const editor_data = await editor.value.save()
+
+    const data = {
+      'title': editor_data.blocks[0].data.text,
+      'tags': tags.value,
+      'content': editor_data,
+      'is_draft': isDraft.value,
+      'is_pay': isPay.value,
+    };
+
     const token = localStorage.getItem('token');
-
     // 打印数据到控制台
-    console.log('Editor Data:', data);
-    console.log('title:', data.blocks[0].data.text);
-    console.log('tags,:', tags.value);
-    console.log('token:', token);
-
 
     // 提交数据到后端
     const response = await fetch('http://localhost:8000/api/v1/submit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${token}`, // 在请求头中携带 token
+        'Authorization': `Bearer ${token}`, // 在请求头中携带 token
       },
       body: JSON.stringify(data), // 提交编辑器的数据
     });
