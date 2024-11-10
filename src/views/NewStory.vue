@@ -488,7 +488,7 @@ const submitData = async () => {
 .settings-card h6 {
   color: #444;
   margin-bottom: 15px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .tag-badge {

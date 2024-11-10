@@ -2,6 +2,33 @@
 defineOptions({
     name: 'AppSiderbar'
 });
+
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
+// 定义一个响应式数据变量来存储文章列表
+const recent_articles = ref([]);
+// 定义一个方法来获取数据
+const fetchArticles = async () => {
+    try {
+        // 使用 axios 请求后端 API 获取文章数据
+        const response = await axios.get('http://localhost:8000/api/v1/recent');
+        if (response.data.code === 200) {
+            // 将返回的文章数据赋值给 articles
+            recent_articles.value = response.data.data;
+            console.log('Fetched articles:', recent_articles.value);
+        } else {
+            console.error('Failed to fetch articles:', response.data.msg);
+        }
+    } catch (error) {
+        console.error('Error fetching articles:', error);
+    }
+};
+
+// 使用 onMounted 钩子来在组件挂载时获取数据
+onMounted(() => {
+    fetchArticles();
+});
 </script>
 
 <template>
@@ -27,16 +54,17 @@ defineOptions({
                 </ol>
             </div>
 
-            <div class="p-4 mb-3 bg-body-tertiary sidebar-section ">
+            <div class="p-4 mb-3 bg-body-tertiary sidebar-section" v-if="recent_articles">
                 <h4 class="">Recent posts</h4>
                 <ul class="list-unstyled mb-0">
                     <li>
-                        <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-1 link-body-emphasis text-decoration-none"
-                            href="#">
-                            <h6 class="mb-0">Example blog post title</h6>
-                        </a>
+                        <router-link v-for="article in recent_articles"
+                            class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-1 link-body-emphasis text-decoration-none"
+                            :to="`/post/${article.url}`">
+                            <h6 class="mb-0">{{ article.title }}</h6>
+                        </router-link>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-1 link-body-emphasis text-decoration-none"
                             href="#">
                             <h6 class="mb-0">This is another blog post title</h6>
@@ -47,7 +75,7 @@ defineOptions({
                             href="#">
                             <h6 class="mb-0">Longer blog post title: This one has multiple lines!</h6>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
 

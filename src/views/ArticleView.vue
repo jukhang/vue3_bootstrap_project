@@ -1,11 +1,44 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 
 import AppHeader from '../components/Header.vue';
 import AppFooter from '../components/Footer.vue';
 import AppComment from '../components/Comment.vue';
 import ScrollSticky from "../components/ScrollSticky.vue";
 
+const route = useRoute();   // 获取路由对象
+const uuid = ref('')        // 获取 UUID 参数
+const article = ref(null);
+
+// 定义五种颜色
+const colors = ['bg-primary', 'bg-info', 'bg-success', 'bg-danger', 'bg-warning'];
+
+const fetchArticle = async () => {
+    try {
+        const response = await fetch(`http://localhost:8000/api/v1/post/${uuid.value}`); // 发送请求到后端获取文章
+        if (!response.ok) {
+            throw new Error('获取文章失败');
+        }
+        const data = await response.json();
+        article.value = data.data;
+        console.log(data);
+    } catch (err) {
+        console.log(err);
+    } finally {
+    }
+};
+
+
+onMounted(() => {
+    // 检查路由参数
+    if (route?.params?.url) {
+        uuid.value = route.params.url // 获取 url
+    } else {
+        uuid.value = null // 如果路由参数不存在，设置为 null
+    }
+    fetchArticle(); // 组件挂载时获取文章数据
+});
 </script>
 
 <template>
@@ -15,7 +48,7 @@ import ScrollSticky from "../components/ScrollSticky.vue";
         <AppHeader />
 
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-8" v-if="article">
                 <!-- 封面图片 -->
                 <div class="text-center mb-4">
                     <img src="/article_cover.jpeg" alt="封面图片" class="img-fluid custom_rounded article-cover-image">
@@ -23,15 +56,15 @@ import ScrollSticky from "../components/ScrollSticky.vue";
 
                 <!-- 文章标题 -->
                 <h2 class="display-8 fw-bold">
-                    使用 Bootstrap 5 实现 Medium 风格的文章页面
+                    {{ article.title }}
                 </h2>
 
                 <!-- 作者信息 -->
                 <div class="d-flex align-items-center py-2">
-                    <img src="https://github.com/mdo.png" alt="作者头像" width="50" height="50" class="rounded-circle me-3">
+                    <img :src="`${article.authorAvatar}`" alt="作者头像" width="50" height="50" class="rounded-circle me-3">
                     <div>
-                        <h6 class="mb-0">作者：张三</h6>
-                        <small class="text-muted">Publish in 2024年10月11日 · 5分钟阅读</small>
+                        <h6 class="mb-0">作者：{{ article.author }}</h6>
+                        <small class="text-muted">Publish in {{ article.publishedDate }} · 5分钟阅读</small>
                     </div>
                 </div>
 
@@ -40,9 +73,10 @@ import ScrollSticky from "../components/ScrollSticky.vue";
                     <div class="d-flex justify-content-between align-items-center border-top border-bottom py-3">
                         <!-- 标签 -->
                         <div>
-                            <span class="badge bg-primary me-1">Bootstrap</span>
-                            <span class="badge bg-secondary me-1">Vue</span>
-                            <span class="badge bg-info text-dark">前端开发</span>
+                            <span v-for="(tag, index) in article.tags" :key="index" :class="colors[index]"
+                                class="badge me-1">
+                                {{ tag }}
+                            </span>
                         </div>
 
                         <!-- 社交分享按钮 -->

@@ -175,9 +175,10 @@ onMounted(() => {
     <div class="row g-5">
       <div class="col-md-8">
         <article v-for="(articleItem, index) in articles" :key="index" class="blog-post border-bottom">
-          <h2 class="display-5 link-body-emphasis mb-3 mt-3">
-            <router-link :to="articleItem.url" class="text-decoration-none">{{ articleItem.title }}</router-link>
-          </h2>
+          <h5 class="display-5 link-body-emphasis mb-3 mt-3">
+            <router-link :to="`/post/${articleItem.url}`" class="text-decoration-none">{{ articleItem.title
+              }}</router-link>
+          </h5>
           <p class="blog-post-meta d-flex align-items-center">
             <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle me-2"
               ref="avatar">
@@ -217,9 +218,9 @@ onMounted(() => {
 
 <style>
 .text-decoration-none {
-  font-size: 36px !important;
+  font-size: 32px !important;
   color: #000000 !important;
-  font-weight: 600 !important;
+  font-weight: 320 !important;
 }
 
 .blog-cover {
@@ -237,7 +238,7 @@ onMounted(() => {
   cursor: pointer;
   color: black;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 300;
 }
 
 .border-dashed {
