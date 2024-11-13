@@ -47,13 +47,13 @@ onMounted(() => {
       </router-link>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><router-link to="/" class="nav-link px-3 link-dark fs-6">首页</router-link></li>
-        <li><router-link to="/hot" class="nav-link px-3 link-dark fs-6">热门文章</router-link></li>
-        <li><router-link to="/tech" class="nav-link px-3 link-dark fs-6">大模型</router-link></li>
-        <li><router-link to="/finance" class="nav-link px-3 link-dark fs-6">财经</router-link></li>
-        <li v-if="isLoggedIn"><router-link to="/finance" class="nav-link px-3 link-dark fs-6">创作者中心</router-link>
+        <li><router-link to="/" class="nav-link px-2 link-dark fs-6">首页</router-link></li>
+        <li><router-link to="/hot" class="nav-link px-2 link-dark fs-6">热门文章</router-link></li>
+        <li><router-link to="/tech" class="nav-link px-2 link-dark fs-6">大模型</router-link></li>
+        <li><router-link to="/finance" class="nav-link px-2 link-dark fs-6">风化物</router-link></li>
+        <li v-if="isLoggedIn"><router-link to="/creator" class="nav-link px-2 link-dark fs-6">创作中心</router-link>
         </li>
-        <li><router-link to="/about" class="nav-link px-3 link-dark fs-6">关于</router-link></li>
+        <li><router-link to="/about" class="nav-link px-2 link-dark fs-6">关于</router-link></li>
       </ul>
 
       <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">

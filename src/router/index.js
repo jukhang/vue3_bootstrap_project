@@ -16,6 +16,38 @@ const router = createRouter({
       component: HomeView
     },
     {
+      path: '/hot',
+      name: '热门文章',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/HotView.vue')
+    },
+    {
+      path: '/tech',
+      name: '教程',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/TechView.vue')
+    },
+    {
+      path: '/finance',
+      name: '风化物投资',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/FinanceView.vue')
+    },
+    {
+      path: '/creator',
+      name: '创作者中心',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/CreatorView.vue')
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting

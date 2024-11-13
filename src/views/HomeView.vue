@@ -150,39 +150,35 @@ onMounted(() => {
 
     <div class="row g-5">
       <div class="col-md-8">
-        <article v-for="(articleItem, index) in articles" :key="index" class="blog-post border-bottom">
-          <h5 class="display-5 link-body-emphasis mb-3 mt-3">
-            <router-link :to="`/post/${articleItem.url}`" class="text-decoration-none">{{ articleItem.title
-              }}</router-link>
-          </h5>
-          <p class="blog-post-meta d-flex align-items-center">
-            <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle me-2"
-              ref="avatar">
-            <router-link :to="`/u/${articleItem.author}`" class="me-2 cursor-pointer">
-              {{ articleItem.author }}
-            </router-link>
-            <span>{{ formattedDate(articleItem.publishedDate) }}</span>
-          </p>
+        <div v-for="(articleItem, index) in articles" :key="index">
+          <div class="row align-items-stretch mt-3">
+            <div class="col-md-8 d-flex flex-column">
+              <article class="blog-post border-bottom flex-grow-1">
+                <h5 class="display-5 link-body-emphasis mb-3 mt-3">
+                  <router-link :to="`/post/${articleItem.url}`" class="text-decoration-none">{{ articleItem.title
+                    }}</router-link>
+                </h5>
+                <p class="blog-post-meta d-flex align-items-center">
+                  <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle me-2"
+                    ref="avatar">
+                  <router-link :to="`/u/${articleItem.author}`" class="me-2 cursor-pointer">
+                    {{ articleItem.author }}
+                  </router-link>
+                  <span>{{ formattedDate(articleItem.publishedDate) }}</span>
+                </p>
 
-          <p>{{ articleItem.content }}</p>
-        </article>
-
-        <div ref="bottomObserver" class="observer"></div>
-
-        <!-- <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center mt-3">
-            <li class="page-item disabled">
-              <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">Next</a>
-            </li>
-          </ul>
-        </nav> -->
-
+                <p class="content-clamp">{{ articleItem.content }}</p>
+              </article>
+            </div>
+            <div class="col-md-4 d-flex align-items-stretch pt-5 pb-1">
+              <div class="w-100">
+                <img src="/article_cover.jpeg" class="img-fluid custom-rounded-1 w-100 h-100"
+                  style="object-fit: cover;">
+              </div>
+            </div>
+          </div>
+          <div ref="bottomObserver" class="observer"></div>
+        </div>
       </div>
 
       <AppSiderbar />
@@ -222,5 +218,19 @@ onMounted(() => {
   /* border-bottom: 2px dashed #bdbdbd; */
   border-bottom: 3px dotted #bdbdbd;
   margin: 20px 0;
+}
+
+.content-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  line-clamp: 2;
+}
+
+.custom-rounded-1 {
+  border-radius: 10px !important;
 }
 </style>

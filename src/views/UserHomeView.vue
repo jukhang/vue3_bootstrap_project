@@ -48,7 +48,7 @@ const activeTabTitle = computed(() => {
     }
 })
 
-const sidebarItems = ['基本信息', '个人创作', '个人收藏', '我的消息'];
+const sidebarItems = ['基本信息', '我的创作', '我的收藏', '我的消息'];
 const activeNav = ref('个人信息');
 const activeSidebar = ref('基本信息');
 </script>

@@ -8,7 +8,7 @@ defineOptions({
 <template>
 
   <footer class="py-5">
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-6 col-md-2 mb-3">
         <h5>Section</h5>
         <ul class="nav flex-column">
@@ -41,7 +41,7 @@ defineOptions({
           </div>
         </form>
       </div>
-    </div>
+    </div> -->
 
     <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
       <p>© 2024 Company, Inc. All rights reserved.</p>
