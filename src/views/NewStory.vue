@@ -39,6 +39,29 @@
                   <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
+                  <!-- 文章背景图设置 -->
+                  <div class="settings-card">
+                    <h6>文章背景图</h6>
+                    <div class="mb-3">
+                      <input type="text" class="form-control mb-2" />
+                    </div>
+                  </div>
+                  <!-- 标签设置 -->
+                  <div class="settings-card">
+                    <h6>文章标签</h6>
+                    <div class="mb-3">
+                      <input type="text" class="form-control mb-2" v-model="newTag" @keyup.enter="addTag"
+                        placeholder="输入标签后按回车添加" :disabled="tags.length >= 5">
+                      <div class="tag-container">
+                        <span v-for="tag in tags" :key="tag" class="tag-badge">
+                          {{ tag }}
+                          <i class="close-icon" @click="removeTag(tag)" role="button">x</i>
+                        </span>
+                      </div>
+                    </div>
+                    <small class="text-muted">最多可添加5个标签</small>
+                  </div>
+
                   <!-- 发布状态设置 -->
                   <div class="settings-card">
                     <h6>发布状态</h6>
@@ -58,21 +81,6 @@
                     </div>
                   </div>
 
-                  <!-- 标签设置 -->
-                  <div class="settings-card">
-                    <h6>文章标签</h6>
-                    <div class="mb-3">
-                      <input type="text" class="form-control mb-2" v-model="newTag" @keyup.enter="addTag"
-                        placeholder="输入标签后按回车添加" :disabled="tags.length >= 5">
-                      <div class="tag-container">
-                        <span v-for="tag in tags" :key="tag" class="tag-badge">
-                          {{ tag }}
-                          <i class="close-icon" @click="removeTag(tag)" role="button">x</i>
-                        </span>
-                      </div>
-                    </div>
-                    <small class="text-muted">最多可添加5个标签</small>
-                  </div>
                 </div>
               </div>
             </div>

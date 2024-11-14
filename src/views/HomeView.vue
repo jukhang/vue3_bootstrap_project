@@ -100,7 +100,7 @@ onMounted(() => {
     <div class="row mb-4 mt-4">
       <div class="col-md-4">
         <div
-          class="row g-0 border custom_rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          class="row g-0 border custom_rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative hot-blog-cover">
           <div class="col p-4 d-flex flex-column position-static">
             <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
             <h3 class="mb-0">Featured post</h3>
@@ -116,7 +116,7 @@ onMounted(() => {
       </div>
       <div class="col-md-4">
         <div
-          class="row g-0 border custom_rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          class="row g-0 border custom_rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative hot-blog-cover">
           <div class="col p-4 d-flex flex-column position-static">
             <strong class="d-inline-block mb-2 text-success-emphasis">Design</strong>
             <h3 class="mb-0">Post title</h3>
@@ -132,7 +132,7 @@ onMounted(() => {
       </div>
       <div class="col-md-4">
         <div
-          class="row g-0 border custom_rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          class="row g-0 border custom_rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative hot-blog-cover">
           <div class="col p-4 d-flex flex-column position-static">
             <strong class="d-inline-block mb-2 text-success-emphasis">Design</strong>
             <h3 class="mb-0">Post title</h3>
@@ -151,8 +151,8 @@ onMounted(() => {
     <div class="row g-5">
       <div class="col-md-8">
         <div v-for="(articleItem, index) in articles" :key="index">
-          <div class="row align-items-stretch mt-3">
-            <div class="col-md-8 d-flex flex-column">
+          <div class="row align-items-stretch">
+            <div class="col-md-8 d-flex flex-column pb-3 mb-3">
               <article class="blog-post border-bottom flex-grow-1">
                 <h5 class="display-5 link-body-emphasis mb-3 mt-3">
                   <router-link :to="`/post/${articleItem.url}`" class="text-decoration-none">{{ articleItem.title
@@ -170,7 +170,7 @@ onMounted(() => {
                 <p class="content-clamp">{{ articleItem.content }}</p>
               </article>
             </div>
-            <div class="col-md-4 d-flex align-items-stretch pt-5 pb-1">
+            <div class="col-md-4 d-flex align-items-stretch pt-5 pb-3 mb-3">
               <div class="w-100">
                 <img src="/article_cover.jpeg" class="img-fluid custom-rounded-1 w-100 h-100"
                   style="object-fit: cover;">
@@ -204,6 +204,18 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.hot-blog-cover {
+  background-color: #fcfcfc;
+  background-image: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
 .cursor-pointer {
