@@ -172,8 +172,8 @@ onMounted(() => {
             </div>
             <div class="col-md-4 d-flex align-items-stretch pt-5 pb-3 mb-3">
               <div class="w-100">
-                <img src="/article_cover.jpeg" class="img-fluid custom-rounded-1 w-100 h-100"
-                  style="object-fit: cover;">
+                <img src="/article_cover.jpeg" class="img-fluid custom-rounded-1 w-100"
+                  style="object-fit: cover;height: 140px;">
               </div>
             </div>
           </div>

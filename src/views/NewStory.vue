@@ -39,13 +39,6 @@
                   <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                  <!-- 文章背景图设置 -->
-                  <div class="settings-card">
-                    <h6>文章背景图</h6>
-                    <div class="mb-3">
-                      <input type="text" class="form-control mb-2" />
-                    </div>
-                  </div>
                   <!-- 标签设置 -->
                   <div class="settings-card">
                     <h6>文章标签</h6>
@@ -202,6 +195,12 @@
 
     <div class="row justify-content-center">
       <div class="col-md-8">
+        <!-- 裁剪框 -->
+        <div class="profile-page">
+          <ImageCropper v-model="bannerImage" @update:modelValue="handleBannerUpdate" />
+        </div>
+
+        <!-- 编辑器 -->
         <div id="editor"></div>
         <input type="hidden" id="body" />
       </div>
@@ -210,8 +209,9 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, ref, watch } from 'vue';
+import { onBeforeMount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import ImageCropper from '../components/ImageCropper.vue'
 
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
@@ -234,6 +234,14 @@ const username = ref('')
 const isLoggedIn = ref(false);  // 响应式变量
 const isDraft = ref(false);  // 响应式变量
 const isPay = ref(false);  // 响应式变量
+
+const bannerImage = ref(null)
+
+const handleBannerUpdate = (newValue) => {
+  console.log('Banner updated:', newValue)
+  console.log(bannerImage.value)
+  // 这里可以处理图片更新后的逻辑
+}
 
 const getUsername = () => {
   const storedUsername = localStorage.getItem('username')
@@ -284,6 +292,9 @@ const addTag = () => {
 const removeTag = (index) => {
   tags.value.splice(index, 1); // 根据索引删除标签
 };
+
+// 文章背景图
+
 
 onMounted(() => {
   getUsername();
@@ -531,5 +542,11 @@ const submitData = async () => {
 
 .close-icon:hover {
   color: #dc3545;
+}
+
+.crop-box {
+  border: 2px dashed #fff;
+  background-color: rgba(0, 0, 0, 0.3);
+  cursor: move;
 }
 </style>
