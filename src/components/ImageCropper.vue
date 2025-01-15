@@ -9,7 +9,7 @@
         }">
             <!-- 当前背景图 -->
             <img v-if="currentPreview" :src="currentPreview" alt="Banner preview" class="w-100 h-100"
-                style="object-fit: cover;" />
+                style="width: 100%; object-fit: cover; object-position: center;" />
 
             <!-- 上传按钮 -->
             <div v-if="!currentPreview"
@@ -38,8 +38,7 @@
             <div class="modal-dialog modal-dialog-centered" style="width: 800px; max-width: 95vw;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">调整背景图片</h5>
-                        <button type="button" class="btn-close" @click="closeEditor"></button>
+                        <!-- <button type="button" class="btn-close" @click="closeEditor"></button> -->
                     </div>
                     <div class="modal-body p-0">
                         <div class="editor-container position-relative">
@@ -101,14 +100,14 @@
                             </div>
 
                             <!-- 缩放控制 -->
-                            <div class="zoom-control p-3 bg-light border-top">
+                            <!-- <div class="zoom-control p-3 bg-light border-top">
                                 <div class="d-flex align-items-center justify-content-center gap-3">
                                     <i class="bi bi-zoom-out"></i>
                                     <input type="range" class="form-range" style="width: 240px;" min="100" max="240"
                                         v-model="zoom">
                                     <i class="bi bi-zoom-in"></i>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -355,5 +354,31 @@ onUnmounted(() => {
     .modal-dialog {
         margin: 1rem;
     }
+}
+
+.image-container {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    /* 确保图像始终从中心开始显示 */
+    /* transition: transform 0.3s ease; */
+    /* 添加平滑的缩放过渡效果 */
+}
+
+/* 增加图像缩放效果 */
+.image-container:hover img {
+    transform: scale(1.2);
+    /* 在悬停时，缩放图片 */
 }
 </style>

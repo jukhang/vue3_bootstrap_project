@@ -1,15 +1,15 @@
 <script setup>
+import { ref, onMounted } from 'vue'
+import { Popover } from 'bootstrap'
+import axios from 'axios'
 
+import config from '@/config' // 引入配置文件
 import AppHeader from '../components/Header.vue'
 import AppFooter from '../components/Footer.vue'
 import AppSiderbar from '../components/Siderbar.vue'
 
-import { ref, onMounted } from 'vue';
-import { Popover } from 'bootstrap';
-import axios from 'axios';
-
-const page = ref(1);
-const loading = ref(false);
+const page = ref(1)
+const loading = ref(false)
 
 const popoverContent = `
   <div>
@@ -21,86 +21,91 @@ const popoverContent = `
     <p>Followers: 123</p>
     <p>A brief description about the user.</p>
   </div>
-`;
+`
 
-const avatar = ref(null);
-const name = ref(null);
+const avatar = ref(null)
+const name = ref(null)
 
 const showPopover = (event) => {
-  const popover = Popover.getInstance(event.currentTarget) || new Popover(event.currentTarget, {
-    content: popoverContent,
-    html: true,
-    placement: 'top',
-    delay: { "show": 100, "hide": 100 }  // 添加延迟时间
-  });
-  popover.show();
-};
+  const popover =
+    Popover.getInstance(event.currentTarget) ||
+    new Popover(event.currentTarget, {
+      content: popoverContent,
+      html: true,
+      placement: 'top',
+      delay: { show: 100, hide: 100 } // 添加延迟时间
+    })
+  popover.show()
+}
 
 const hidePopover = (event) => {
-  const popover = Popover.getInstance(event.currentTarget);
+  const popover = Popover.getInstance(event.currentTarget)
   if (popover) {
-    popover.hide();
+    popover.hide()
   }
-};
+}
 
 const initializePopovers = () => {
-  const popoverTriggerList = document.querySelectorAll('.cursor-pointer');
-  popoverTriggerList.forEach(trigger => {
+  const popoverTriggerList = document.querySelectorAll('.cursor-pointer')
+  popoverTriggerList.forEach((trigger) => {
     new Popover(trigger, {
       content: popoverContent.value,
       html: true,
       placement: 'top',
-      delay: { "show": 100, "hide": 100 },  // 添加延迟时间
-    });
-  });
-};
+      delay: { show: 100, hide: 100 } // 添加延迟时间
+    })
+  })
+}
 
-const articles = ref([]); // 存储多篇文章数据
+const articles = ref([]) // 存储多篇文章数据
 
 // 获取文章数据
 const fetchArticles = async () => {
   try {
-    const response = await axios.get('http://localhost:8000/api/v1/articles'); // 根据实际接口调整
-    articles.value = response.data.data; // 假设返回的是文章数组
+    const response = await axios.get(`${config.API_BASE_URL}/articles`) // 根据实际接口调整
+    articles.value = response.data.data // 假设返回的是文章数组
   } catch (error) {
-    console.error('Error fetching articles:', error);
+    console.error('Error fetching articles:', error)
   }
-};
+}
 
 // 格式化发布日期
 const formattedDate = (dateString) => {
-  const options = { year: 'numeric', month: 'short', day: 'numeric' };
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat('en-US', options).format(date);
-};
+  const options = { year: 'numeric', month: 'short', day: 'numeric' }
+  const date = new Date(dateString)
+  return new Intl.DateTimeFormat('en-US', options).format(date)
+}
 
 onMounted(() => {
-  fetchArticles();
-  initializePopovers(); // 合并初始化逻辑
-});
-
-
+  fetchArticles()
+  initializePopovers() // 合并初始化逻辑
+})
 </script>
 
 <template>
-
   <div class="container">
-
     <AppHeader />
 
-    <div class="p-4 p-md-5 mb-4 mt-4 custom_rounded text-body-emphasis bg-body-secondary blog-cover">
+    <div
+      class="p-4 p-md-5 mb-4 mt-4 custom_rounded text-body-emphasis bg-body-secondary blog-cover"
+    >
       <div class="col-lg-12 px-0">
         <h1 class="">How build high-quality system with best practices.</h1>
-        <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently
-          about what’s most interesting in this post’s contents.</p>
-        <p class="lead mb-0"><a href="#" class="text-body-emphasis fw-bold">Continue reading...</a></p>
+        <p class="lead my-3">
+          Multiple lines of text that form the lede, informing new readers quickly and efficiently
+          about what’s most interesting in this post’s contents.
+        </p>
+        <p class="lead mb-0">
+          <a href="#" class="text-body-emphasis fw-bold">Continue reading...</a>
+        </p>
       </div>
     </div>
 
     <div class="row mb-4 mt-4">
       <div class="col-md-4">
         <div
-          class="row g-0 border custom_rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative hot-blog-cover">
+          class="row g-0 border custom_rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative hot-blog-cover"
+        >
           <div class="col p-4 d-flex flex-column position-static">
             <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
             <h3 class="mb-0">Featured post</h3>
@@ -116,7 +121,8 @@ onMounted(() => {
       </div>
       <div class="col-md-4">
         <div
-          class="row g-0 border custom_rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative hot-blog-cover">
+          class="row g-0 border custom_rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative hot-blog-cover"
+        >
           <div class="col p-4 d-flex flex-column position-static">
             <strong class="d-inline-block mb-2 text-success-emphasis">Design</strong>
             <h3 class="mb-0">Post title</h3>
@@ -132,7 +138,8 @@ onMounted(() => {
       </div>
       <div class="col-md-4">
         <div
-          class="row g-0 border custom_rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative hot-blog-cover">
+          class="row g-0 border custom_rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative hot-blog-cover"
+        >
           <div class="col p-4 d-flex flex-column position-static">
             <strong class="d-inline-block mb-2 text-success-emphasis">Design</strong>
             <h3 class="mb-0">Post title</h3>
@@ -155,12 +162,19 @@ onMounted(() => {
             <div class="col-md-8 d-flex flex-column pb-3 mb-3">
               <article class="blog-post border-bottom flex-grow-1">
                 <h5 class="display-5 link-body-emphasis mb-3 mt-3">
-                  <router-link :to="`/post/${articleItem.url}`" class="text-decoration-none">{{ articleItem.title
-                    }}</router-link>
+                  <router-link :to="`/post/${articleItem.url}`" class="text-decoration-none">{{
+                    articleItem.title
+                  }}</router-link>
                 </h5>
                 <p class="blog-post-meta d-flex align-items-center">
-                  <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle me-2"
-                    ref="avatar">
+                  <img
+                    src="https://github.com/mdo.png"
+                    alt="mdo"
+                    width="24"
+                    height="24"
+                    class="rounded-circle me-2"
+                    ref="avatar"
+                  />
                   <router-link :to="`/u/${articleItem.author}`" class="me-2 cursor-pointer">
                     {{ articleItem.author }}
                   </router-link>
@@ -172,8 +186,11 @@ onMounted(() => {
             </div>
             <div class="col-md-4 d-flex align-items-stretch pt-5 pb-3 mb-3">
               <div class="w-100">
-                <img src="/article_cover.jpeg" class="img-fluid custom-rounded-1 w-100"
-                  style="object-fit: cover;height: 140px;">
+                <img
+                  src="/article_cover.jpeg"
+                  class="img-fluid custom-rounded-1 w-100"
+                  style="object-fit: cover; height: 140px"
+                />
               </div>
             </div>
           </div>

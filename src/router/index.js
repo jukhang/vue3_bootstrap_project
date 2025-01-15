@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import NewStory from '@/views/NewStory.vue'
+import NewStoryView from '@/views/NewStoryView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import ArticleView from '@/views/ArticleView.vue'
@@ -59,12 +59,12 @@ const router = createRouter({
       path: '/post/:url',
       name: 'post',
       component: ArticleView,
-      props: true, // 传递路由参数
+      props: true // 传递路由参数
     },
     {
       path: '/new-story',
       name: 'write',
-      component: NewStory
+      component: NewStoryView
     },
     {
       path: '/login',
@@ -87,17 +87,17 @@ const router = createRouter({
         } else {
           next()
         }
-      },
+      }
     },
     {
       path: '/404', // 动态路由，使用用户名作为参数
       name: '404',
-      component: NotFoundView,
+      component: NotFoundView
     },
     {
       path: '/:pathMatch(.*)*',
       redirect: '/404'
-    },
+    }
   ],
   scrollBehavior(to, from, savedPosition) {
     // 始终滚动到顶部
