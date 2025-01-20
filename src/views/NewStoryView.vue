@@ -1,3 +1,242 @@
+<script setup>
+import config from '@/config' // 引入配置文件
+
+import { onBeforeMount, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import ImageCropper from '../components/ImageCropper.vue'
+
+import EditorJS from '@editorjs/editorjs'
+import Header from '@editorjs/header'
+import Quote from '@editorjs/quote'
+import Delimiter from '@editorjs/delimiter'
+import List from '@editorjs/list'
+import Checklist from '@editorjs/checklist'
+import Warning from '@editorjs/warning'
+import Marker from '@editorjs/marker'
+import InlineCode from '@editorjs/inline-code'
+import LinkTool from '@editorjs/link'
+import Embed from '@editorjs/embed'
+import Table from '@editorjs/table'
+import ImageTool from '@editorjs/image'
+import editorjsCodecup from '@calumk/editorjs-codecup'
+
+const router = useRouter()
+const username = ref('')
+const isLoggedIn = ref(false) // 响应式变量
+const isDraft = ref(false) // 响应式变量
+const isPay = ref(false) // 响应式变量
+
+const bannerImage = ref(null)
+
+const handleBannerUpdate = (newValue) => {
+  console.log('Banner updated:', newValue)
+  console.log(bannerImage.value)
+  // 这里可以处理图片更新后的逻辑
+}
+
+const getUsername = () => {
+  const storedUsername = localStorage.getItem('username')
+  if (storedUsername) {
+    username.value = storedUsername // 将用户名赋值给响应式变量
+  } else {
+    username.value = null
+  }
+}
+
+onBeforeMount(() => {
+  const token = localStorage.getItem('token')
+  if (!token) {
+    // 如果 token 不存在，跳转到 404 页面
+    router.push('/404')
+  }
+})
+
+// 处理登出请求
+const handleLogout = () => {
+  isLoggedIn.value = false
+  localStorage.removeItem('token')
+  localStorage.removeItem('username')
+  // 跳转到登录页面或首页
+  router.push('/')
+}
+
+// 检查本地存储中的 token 是否存在，决定是否自动登录
+if (localStorage.getItem('token')) {
+  isLoggedIn.value = true
+}
+
+const editor = ref(null)
+const isSubmitDisabled = ref(true)
+
+const newTag = ref('') // 存储用户输入的标签
+const tags = ref([]) // 默认标签
+
+// 添加标签到列表
+const addTag = () => {
+  if (newTag.value && tags.value.length < 5) {
+    tags.value.push(newTag.value.trim())
+    newTag.value = '' // 清空输入框
+  }
+}
+
+// 删除标签
+const removeTag = (index) => {
+  tags.value.splice(index, 1) // 根据索引删除标签
+}
+
+// 文章背景图
+
+onMounted(() => {
+  getUsername()
+  editor.value = new EditorJS({
+    holder: 'editor',
+    autofocus: true,
+    // placeholder: '开始写作...',
+    tools: {
+      header: {
+        class: Header,
+        config: {
+          placeholder: '请输入标题',
+          levels: [1, 2, 3, 4, 5],
+          defaultLevel: 1
+        },
+        shortcut: 'CMD+SHIFT+H'
+      },
+      quote: {
+        class: Quote,
+        inlineToolbar: true,
+        config: {
+          quotePlaceholder: '输入引语',
+          captionPlaceholder: '输入引语作者等信息'
+        },
+        shortcut: 'CMD+SHIFT+O'
+      },
+      delimiter: {
+        class: Delimiter,
+        shortcut: 'CMD+SHIFT+D'
+      },
+      list: {
+        class: List,
+        inlineToolbar: true,
+        shortcut: 'CMD+SHIFT+L'
+      },
+      checklist: {
+        class: Checklist,
+        inlineToolbar: true
+      },
+      warning: {
+        class: Warning,
+        inlineToolbar: true,
+        config: {
+          titlePlaceholder: '标题',
+          messagePlaceholder: '内容'
+        }
+      },
+      marker: {
+        class: Marker,
+        shortcut: 'CMD+SHIFT+M'
+      },
+      code: {
+        class: editorjsCodecup,
+        shortcut: 'CMD+SHIFT+C',
+        config: {}
+      },
+      inlineCode: {
+        class: InlineCode,
+        shortcut: 'CMD+SHIFT+C'
+      },
+      linkTool: {
+        class: LinkTool,
+        config: {
+          endpoint: '' // 解析 url 的后端地址
+        }
+      },
+      embed: Embed,
+      table: {
+        class: Table,
+        inlineToolbar: true,
+        shortcut: 'CMD+ALT+T'
+      },
+      image: {
+        class: ImageTool,
+        config: {
+          endpoints: {
+            byFile: `${config.API_BASE_URL}/upload-file`, // Your backend file uploader endpoint
+            byUrl: `${config.API_BASE_URL}/fetch-url` // Your endpoint that provides uploading by Url
+          }
+        },
+        shortcut: 'CMD+SHIFT+I'
+      }
+    },
+    i18n: {
+      messages: {
+        // i18n messages (same as your original code)
+      }
+    },
+    data: {
+      blocks: [
+        {
+          type: 'header',
+          data: {
+            text: ''
+          }
+        }
+      ]
+    },
+    onReady: () => {
+      console.log('Editor.js is ready to work!')
+    },
+    onChange: (api, event) => {
+      editor.value
+        .save()
+        .then((savedData) => {
+          document.getElementById('body').value = JSON.stringify(savedData)
+          isSubmitDisabled.value = savedData.blocks.length === 0
+        })
+        .catch((error) => {
+          console.error('Saving error', error)
+        })
+    }
+  })
+})
+
+const submitData = async () => {
+  try {
+    // 获取编辑器的数据
+    const editor_data = await editor.value.save()
+
+    const data = {
+      title: editor_data.blocks[0].data.text,
+      tags: tags.value,
+      content: editor_data,
+      is_draft: isDraft.value,
+      is_pay: isPay.value
+    }
+
+    const token = localStorage.getItem('token')
+    // 打印数据到控制台
+
+    // 提交数据到后端
+    const response = await fetch(`${config.API_BASE_URL}/submit`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}` // 在请求头中携带 token
+      },
+      body: JSON.stringify(data) // 提交编辑器的数据
+    })
+
+    if (response.ok) {
+      console.log('数据提交成功')
+    } else {
+      console.log('数据提交失败')
+    }
+  } catch (error) {
+    console.error('提交失败:', error)
+  }
+}
+</script>
+
 <template>
   <div class="container">
     <header class="py-2 mb-3 border-bottom" style="cursor: pointer">
@@ -381,246 +620,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import config from '@/config' // 引入配置文件
-
-import { onBeforeMount, onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import ImageCropper from '../components/ImageCropper.vue'
-
-import EditorJS from '@editorjs/editorjs'
-import Header from '@editorjs/header'
-import Quote from '@editorjs/quote'
-import Delimiter from '@editorjs/delimiter'
-import List from '@editorjs/list'
-import Checklist from '@editorjs/checklist'
-import Warning from '@editorjs/warning'
-import Marker from '@editorjs/marker'
-import CodeTool from '@editorjs/code'
-import InlineCode from '@editorjs/inline-code'
-import LinkTool from '@editorjs/link'
-import Embed from '@editorjs/embed'
-import Table from '@editorjs/table'
-import ImageTool from '@editorjs/image'
-import editorjsCodecup from '@calumk/editorjs-codecup'
-
-const router = useRouter()
-const username = ref('')
-const isLoggedIn = ref(false) // 响应式变量
-const isDraft = ref(false) // 响应式变量
-const isPay = ref(false) // 响应式变量
-
-const bannerImage = ref(null)
-
-const handleBannerUpdate = (newValue) => {
-  console.log('Banner updated:', newValue)
-  console.log(bannerImage.value)
-  // 这里可以处理图片更新后的逻辑
-}
-
-const getUsername = () => {
-  const storedUsername = localStorage.getItem('username')
-  if (storedUsername) {
-    username.value = storedUsername // 将用户名赋值给响应式变量
-  } else {
-    username.value = null
-  }
-}
-
-onBeforeMount(() => {
-  const token = localStorage.getItem('token')
-  if (!token) {
-    // 如果 token 不存在，跳转到 404 页面
-    router.push('/404')
-  }
-})
-
-// 处理登出请求
-const handleLogout = () => {
-  isLoggedIn.value = false
-  localStorage.removeItem('token')
-  localStorage.removeItem('username')
-  // 跳转到登录页面或首页
-  router.push('/')
-}
-
-// 检查本地存储中的 token 是否存在，决定是否自动登录
-if (localStorage.getItem('token')) {
-  isLoggedIn.value = true
-}
-
-const editor = ref(null)
-const isSubmitDisabled = ref(true)
-
-const newTag = ref('') // 存储用户输入的标签
-const tags = ref([]) // 默认标签
-
-// 添加标签到列表
-const addTag = () => {
-  if (newTag.value && tags.value.length < 5) {
-    tags.value.push(newTag.value.trim())
-    newTag.value = '' // 清空输入框
-  }
-}
-
-// 删除标签
-const removeTag = (index) => {
-  tags.value.splice(index, 1) // 根据索引删除标签
-}
-
-// 文章背景图
-
-onMounted(() => {
-  getUsername()
-  editor.value = new EditorJS({
-    holder: 'editor',
-    autofocus: true,
-    // placeholder: '开始写作...',
-    tools: {
-      header: {
-        class: Header,
-        config: {
-          placeholder: '请输入标题',
-          levels: [1, 2, 3, 4, 5],
-          defaultLevel: 1
-        },
-        shortcut: 'CMD+SHIFT+H'
-      },
-      quote: {
-        class: Quote,
-        inlineToolbar: true,
-        config: {
-          quotePlaceholder: '输入引语',
-          captionPlaceholder: '输入引语作者等信息'
-        },
-        shortcut: 'CMD+SHIFT+O'
-      },
-      delimiter: {
-        class: Delimiter,
-        shortcut: 'CMD+SHIFT+D'
-      },
-      list: {
-        class: List,
-        inlineToolbar: true,
-        shortcut: 'CMD+SHIFT+L'
-      },
-      checklist: {
-        class: Checklist,
-        inlineToolbar: true
-      },
-      warning: {
-        class: Warning,
-        inlineToolbar: true,
-        config: {
-          titlePlaceholder: '标题',
-          messagePlaceholder: '内容'
-        }
-      },
-      marker: {
-        class: Marker,
-        shortcut: 'CMD+SHIFT+M'
-      },
-      code: {
-        class: editorjsCodecup,
-        shortcut: 'CMD+SHIFT+C',
-        config: {}
-      },
-      inlineCode: {
-        class: InlineCode,
-        shortcut: 'CMD+SHIFT+C'
-      },
-      linkTool: {
-        class: LinkTool,
-        config: {
-          endpoint: '' // 解析 url 的后端地址
-        }
-      },
-      embed: Embed,
-      table: {
-        class: Table,
-        inlineToolbar: true,
-        shortcut: 'CMD+ALT+T'
-      },
-      image: {
-        class: ImageTool,
-        config: {
-          endpoints: {
-            byFile: `${config.API_BASE_URL}/login/upload-file`, // Your backend file uploader endpoint
-            byUrl: `${config.API_BASE_URL}/fetch-url` // Your endpoint that provides uploading by Url
-          }
-        },
-        shortcut: 'CMD+SHIFT+I'
-      }
-    },
-    i18n: {
-      messages: {
-        // i18n messages (same as your original code)
-      }
-    },
-    data: {
-      blocks: [
-        {
-          type: 'header',
-          data: {
-            text: ''
-          }
-        }
-      ]
-    },
-    onReady: () => {
-      console.log('Editor.js is ready to work!')
-    },
-    onChange: (api, event) => {
-      editor.value
-        .save()
-        .then((savedData) => {
-          document.getElementById('body').value = JSON.stringify(savedData)
-          isSubmitDisabled.value = savedData.blocks.length === 0
-        })
-        .catch((error) => {
-          console.error('Saving error', error)
-        })
-    }
-  })
-})
-
-const submitData = async () => {
-  try {
-    // 获取编辑器的数据
-    const editor_data = await editor.value.save()
-
-    const data = {
-      title: editor_data.blocks[0].data.text,
-      tags: tags.value,
-      content: editor_data,
-      is_draft: isDraft.value,
-      is_pay: isPay.value
-    }
-
-    const token = localStorage.getItem('token')
-    // 打印数据到控制台
-
-    // 提交数据到后端
-    const response = await fetch(`${config.API_BASE_URL}/submit`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}` // 在请求头中携带 token
-      },
-      body: JSON.stringify(data) // 提交编辑器的数据
-    })
-
-    if (response.ok) {
-      console.log('数据提交成功')
-    } else {
-      console.log('数据提交失败')
-    }
-  } catch (error) {
-    console.error('提交失败:', error)
-  }
-}
-</script>
 
 <style scoped>
 .btn-outline-custom {

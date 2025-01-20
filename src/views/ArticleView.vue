@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import MarkdownIt from 'markdown-it'
 
 import config from '@/config' // 引入配置文件
 import AppHeader from '../components/Header.vue'
@@ -12,9 +13,12 @@ import ScrollSticky from '../components/ScrollSticky.vue'
 const route = useRoute() // 获取路由对象
 const uuid = ref('') // 获取 UUID 参数
 const article = ref(null)
+const md_html = ref(null)
 
 // 定义五种颜色
 const colors = ['bg-primary', 'bg-info', 'bg-success', 'bg-danger', 'bg-warning']
+
+const md = new MarkdownIt()
 
 const fetchArticle = async () => {
   try {
@@ -28,6 +32,8 @@ const fetchArticle = async () => {
     console.log(err)
   } finally {
     console.log('获取文章完成')
+    console.log(article.value.content)
+    md_html.value = md.render(article.value.content) // 将 Markdown 内容渲染为 HTML
   }
 }
 
@@ -207,27 +213,10 @@ onMounted(() => {
             </div>
           </div>
         </ScrollSticky>
+
         <!-- 文章内容 -->
         <article class="content lh-lg py-3">
-          <p>
-            本文是一个 Bootstrap 5 和 Vue 3 实现的 Medium 风格文章详情页面示例。我们将会使用不同的
-            Bootstrap 组件，比如排版类、按钮和图片类，以打造一个简洁的用户体验。
-          </p>
-          <p>
-            Bootstrap 是一个流行的 CSS 框架，可以帮助开发者快速设计和实现响应式的网页。通过结合 Vue
-            3，可以实现更好的组件化和响应式的用户界面。
-          </p>
-
-          <blockquote class="blockquote my-4">
-            <p class="mb-0">“设计一个网页是创造性的过程，它将技术与艺术完美结合。”</p>
-            <footer class="blockquote-footer">
-              UI设计师，<cite title="Source Title">李四</cite>
-            </footer>
-          </blockquote>
-          <p>
-            使用 Bootstrap 5 的排版类，我们可以很方便地控制文本样式、间距和对齐。Bootstrap
-            提供了丰富的字体大小、颜色和样式，适用于各种网页应用。
-          </p>
+          <div class="markdown-body" v-html="md_html"></div>
         </article>
 
         <!-- 评论部分 -->

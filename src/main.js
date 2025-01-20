@@ -6,7 +6,8 @@ import router from './router'
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
-import "bootstrap"
+import 'katex/dist/katex.min.css'
+import 'bootstrap'
 
 // fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
