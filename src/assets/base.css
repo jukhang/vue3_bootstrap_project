@@ -3,3 +3,48 @@
 .custom_rounded {
   border-radius: 15px !important;
 }
+
+.aie-container {
+  border: 0 !important;
+}
+
+/* 覆盖 aie-container-header 样式 */
+.aie-container .aie-container-header {
+  height: 60px !important; /* 调整高度 */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 16px !important;
+  border: 0 !important;
+  /* background-color: #f8f9fa !important; */
+  /* border-bottom: 1px solid #e9ecef !important; */
+}
+
+/* 覆盖菜单项样式 */
+.aie-container .aie-menu-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  padding: 0 4px !important;
+}
+
+/* 覆盖图标样式 */
+.aie-container .aie-menu-item svg {
+  width: 24px !important;
+  height: 24px !important;
+  fill: currentColor !important;
+}
+
+/* 覆盖分隔线样式 */
+.aie-container .aie-menu-divider {
+  height: 60px !important;
+  width: 1px !important;
+  /* background-color: #e9ecef !important; */
+  margin: 0 4px !important;
+}
+
+.aie-container aie-header > div {
+  border-bottom: 1px solid var(--aie-border-color) !important;
+  padding: 10px 0; /* 上下增加 10px 间距，左右不增加 */
+}

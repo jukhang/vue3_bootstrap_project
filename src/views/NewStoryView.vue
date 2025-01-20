@@ -1,38 +1,15 @@
 <script setup>
 import config from '@/config' // 引入配置文件
+import AIEditor from '../components/AIEditor.vue'
 
-import { onBeforeMount, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import ImageCropper from '../components/ImageCropper.vue'
-
-import EditorJS from '@editorjs/editorjs'
-import Header from '@editorjs/header'
-import Quote from '@editorjs/quote'
-import Delimiter from '@editorjs/delimiter'
-import List from '@editorjs/list'
-import Checklist from '@editorjs/checklist'
-import Warning from '@editorjs/warning'
-import Marker from '@editorjs/marker'
-import InlineCode from '@editorjs/inline-code'
-import LinkTool from '@editorjs/link'
-import Embed from '@editorjs/embed'
-import Table from '@editorjs/table'
-import ImageTool from '@editorjs/image'
-import editorjsCodecup from '@calumk/editorjs-codecup'
+import { onBeforeMount, onMounted, ref } from 'vue'
 
 const router = useRouter()
 const username = ref('')
 const isLoggedIn = ref(false) // 响应式变量
 const isDraft = ref(false) // 响应式变量
 const isPay = ref(false) // 响应式变量
-
-const bannerImage = ref(null)
-
-const handleBannerUpdate = (newValue) => {
-  console.log('Banner updated:', newValue)
-  console.log(bannerImage.value)
-  // 这里可以处理图片更新后的逻辑
-}
 
 const getUsername = () => {
   const storedUsername = localStorage.getItem('username')
@@ -84,120 +61,8 @@ const removeTag = (index) => {
   tags.value.splice(index, 1) // 根据索引删除标签
 }
 
-// 文章背景图
-
 onMounted(() => {
   getUsername()
-  editor.value = new EditorJS({
-    holder: 'editor',
-    autofocus: true,
-    // placeholder: '开始写作...',
-    tools: {
-      header: {
-        class: Header,
-        config: {
-          placeholder: '请输入标题',
-          levels: [1, 2, 3, 4, 5],
-          defaultLevel: 1
-        },
-        shortcut: 'CMD+SHIFT+H'
-      },
-      quote: {
-        class: Quote,
-        inlineToolbar: true,
-        config: {
-          quotePlaceholder: '输入引语',
-          captionPlaceholder: '输入引语作者等信息'
-        },
-        shortcut: 'CMD+SHIFT+O'
-      },
-      delimiter: {
-        class: Delimiter,
-        shortcut: 'CMD+SHIFT+D'
-      },
-      list: {
-        class: List,
-        inlineToolbar: true,
-        shortcut: 'CMD+SHIFT+L'
-      },
-      checklist: {
-        class: Checklist,
-        inlineToolbar: true
-      },
-      warning: {
-        class: Warning,
-        inlineToolbar: true,
-        config: {
-          titlePlaceholder: '标题',
-          messagePlaceholder: '内容'
-        }
-      },
-      marker: {
-        class: Marker,
-        shortcut: 'CMD+SHIFT+M'
-      },
-      code: {
-        class: editorjsCodecup,
-        shortcut: 'CMD+SHIFT+C',
-        config: {}
-      },
-      inlineCode: {
-        class: InlineCode,
-        shortcut: 'CMD+SHIFT+C'
-      },
-      linkTool: {
-        class: LinkTool,
-        config: {
-          endpoint: '' // 解析 url 的后端地址
-        }
-      },
-      embed: Embed,
-      table: {
-        class: Table,
-        inlineToolbar: true,
-        shortcut: 'CMD+ALT+T'
-      },
-      image: {
-        class: ImageTool,
-        config: {
-          endpoints: {
-            byFile: `${config.API_BASE_URL}/upload-file`, // Your backend file uploader endpoint
-            byUrl: `${config.API_BASE_URL}/fetch-url` // Your endpoint that provides uploading by Url
-          }
-        },
-        shortcut: 'CMD+SHIFT+I'
-      }
-    },
-    i18n: {
-      messages: {
-        // i18n messages (same as your original code)
-      }
-    },
-    data: {
-      blocks: [
-        {
-          type: 'header',
-          data: {
-            text: ''
-          }
-        }
-      ]
-    },
-    onReady: () => {
-      console.log('Editor.js is ready to work!')
-    },
-    onChange: (api, event) => {
-      editor.value
-        .save()
-        .then((savedData) => {
-          document.getElementById('body').value = JSON.stringify(savedData)
-          isSubmitDisabled.value = savedData.blocks.length === 0
-        })
-        .catch((error) => {
-          console.error('Saving error', error)
-        })
-    }
-  })
 })
 
 const submitData = async () => {
@@ -260,7 +125,7 @@ const submitData = async () => {
               @click="submitData"
               :disabled="isSubmitDisabled"
             >
-              提交
+              发布
             </button>
             <div class="col-12 col-lg-auto mb-lg-0 me-lg-1">
               <button
@@ -607,16 +472,7 @@ const submitData = async () => {
     </header>
 
     <div class="row justify-content-center">
-      <div class="col-md-8">
-        <!-- 裁剪框 -->
-        <div class="profile-page">
-          <ImageCropper v-model="bannerImage" @update:modelValue="handleBannerUpdate" />
-        </div>
-
-        <!-- 编辑器 -->
-        <div id="editor"></div>
-        <input type="hidden" id="body" />
-      </div>
+      <AIEditor />
     </div>
   </div>
 </template>
