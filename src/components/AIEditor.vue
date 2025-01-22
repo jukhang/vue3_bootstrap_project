@@ -9,7 +9,7 @@
             <ImageCropper v-model="bannerImage" @update:modelValue="handleBannerUpdate" />
           </div>
           <div class="mx-auto border-bottom pb-3">
-            <input type="text" class="title-input" placeholder="请输入标题" />
+            <input type="text" class="title-input" placeholder="请输入标题" v-model="title" />
           </div>
           <div class="aie-container-main my-3"></div>
           <div class="aie-container-footer my-3"></div>
@@ -26,28 +26,24 @@ import { onMounted, onUnmounted, ref } from 'vue'
 
 import ImageCropper from '../components/ImageCropper.vue'
 
-// const divRef = ref(null)
-let aiEditor = null
+const title = ref('')
+const aiEditor = ref(null)
 
 onMounted(() => {
-  aiEditor = new AiEditor({
+  aiEditor.value = new AiEditor({
     element: '#aiEditor',
     toolbarSize: 'medium', // 默认 small，可选 'small' | 'medium' | 'large'
     placeholder: '输入内容，支持 markdown 语法...',
     contentIsMarkdown: true,
     contentRetention: true,
     contentRetentionKey: 'editor-content',
-    draggable: true,
+    draggable: false,
     toolbarKeys: [
-      'ai',
-      // 'brush',
-      // 'eraser',
-      '|',
-      'emoji',
-      'heading',
-      // 'font-family',
-      // 'font-size',
+      // 'ai',
       // '|',
+      'emoji',
+      '|',
+      'heading',
       'bold',
       'italic',
       'underline',
@@ -56,41 +52,54 @@ onMounted(() => {
       'subscript',
       'superscript',
       'hr',
-      // 'todo',
       '|',
       'highlight',
       'font-color',
-      // '|',
-      // 'align',
-      // 'line-height',
-      // '|',
       'bullet-list',
       'ordered-list',
-      // 'indent-decrease',
-      // 'indent-increase',
       'break',
       '|',
       'link',
       'image',
-      // 'video',
-      // 'attachment',
       'quote',
       'code-block',
       'table',
       '|',
       'undo',
-      'redo'
-      // '|',
-      // 'source-code',
-      // 'printer',
-      // 'fullscreen'
-    ]
+      'redo',
+      'fullscreen'
+    ],
+    textSelectionBubbleMenu: {
+      enable: true,
+      items: ['Bold', 'Italic', 'Underline', 'Strike', 'code']
+    },
+    image: {
+      allowBase64: true,
+      defaultSize: 1000 // 默认图片尺寸
+      // customMenuInvoke: (editor) => {},
+      // uploadUrl: 'https://your-domain/image/upload',
+      // uploadFormName: 'image', //上传时的文件表单名称
+      // uploadHeaders: {
+      //   jwt: 'xxxxx',
+      //   other: 'xxxx'
+      // },
+      // uploader: (file, uploadUrl, headers, formName) => {
+      //   //可自定义图片上传逻辑
+      // },
+      // uploaderEvent: {
+      //   onUploadBefore: (file, uploadUrl, headers) => {},
+      //   onSuccess: (file, response) => {},
+      //   onFailed: (file, response) => {},
+      //   onError: (file, error) => {}
+      // },
+      // bubbleMenuItems: ['AlignLeft', 'AlignCenter', 'AlignRight', 'delete']
+    }
   })
 })
 
 onUnmounted(() => {
-  if (aiEditor) {
-    aiEditor.destroy()
+  if (aiEditor.value) {
+    aiEditor.value.destroy()
   }
 })
 
@@ -101,20 +110,34 @@ const handleBannerUpdate = (newValue) => {
   console.log(bannerImage.value)
   // 这里可以处理图片更新后的逻辑
 }
+
+// 获取编辑器内容（Markdown 格式）
+const getEditorContent = () => {
+  if (aiEditor.value) {
+    return aiEditor.value.getMarkdown()
+  }
+  return ''
+}
+
+// 暴露方法给父组件
+defineExpose({
+  title,
+  getEditorContent
+})
 </script>
 
 <style scoped>
 .title-input {
-  width: 100%; /* 宽度占满父容器 */
-  height: 64px; /* 设置高度 */
-  padding: 8px 12px; /* 内边距 */
-  font-size: 32px; /* 字体变大 */
-  font-weight: bold; /* 字体加粗 */
-  border: 0px solid #ccc; /* 边框 */
-  border-radius: 4px; /* 圆角 */
-  outline: none; /* 移除聚焦时的外边框 */
-  box-sizing: border-box; /* 确保 padding 和 border 包含在宽度内 */
-  box-shadow: none; /* 移除默认的阴影 */
+  width: 100%;
+  height: 64px;
+  padding: 8px 12px;
+  font-size: 32px;
+  font-weight: bold;
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box;
+  box-shadow: none;
   transition:
     border-color 0.3s ease-in-out,
     box-shadow 0.3s ease-in-out;

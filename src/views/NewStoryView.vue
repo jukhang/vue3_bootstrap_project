@@ -43,7 +43,7 @@ if (localStorage.getItem('token')) {
 }
 
 const editor = ref(null)
-const isSubmitDisabled = ref(true)
+const isSubmitDisabled = ref(false)
 
 const newTag = ref('') // 存储用户输入的标签
 const tags = ref([]) // 默认标签
@@ -67,22 +67,25 @@ onMounted(() => {
 
 const submitData = async () => {
   try {
-    // 获取编辑器的数据
-    const editor_data = await editor.value.save()
+    const title = ref('')
+    const content = ref('')
+    const token = localStorage.getItem('token')
+
+    if (editor.value) {
+      title.value = editor.value.title
+      content.value = editor.value.getEditorContent()
+    }
 
     const data = {
-      title: editor_data.blocks[0].data.text,
+      title: title.value,
       tags: tags.value,
-      content: editor_data,
+      content: content.value,
       is_draft: isDraft.value,
       is_pay: isPay.value
     }
 
-    const token = localStorage.getItem('token')
-    // 打印数据到控制台
-
     // 提交数据到后端
-    const response = await fetch(`${config.API_BASE_URL}/submit`, {
+    const response = await fetch(`${config.API_BASE_URL}/article`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -472,7 +475,7 @@ const submitData = async () => {
     </header>
 
     <div class="row justify-content-center">
-      <AIEditor />
+      <AIEditor ref="editor" />
     </div>
   </div>
 </template>
@@ -561,7 +564,6 @@ const submitData = async () => {
 .close-icon {
   cursor: pointer;
   font-size: 0.8rem;
-  /* line-height: 1; */
   font-weight: bold;
   padding: 0 5px;
   margin-right: -5px;

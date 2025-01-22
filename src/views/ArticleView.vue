@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import MarkdownIt from 'markdown-it'
+import mk from 'markdown-it-katex'
 
 import config from '@/config' // 引入配置文件
 import AppHeader from '../components/Header.vue'
@@ -18,7 +19,14 @@ const md_html = ref(null)
 // 定义五种颜色
 const colors = ['bg-primary', 'bg-info', 'bg-success', 'bg-danger', 'bg-warning']
 
-const md = new MarkdownIt()
+const md = new MarkdownIt({
+  html: true,
+  linkify: true,
+  typographer: true
+})
+md.use(mk, {
+  throwOnError: false
+})
 
 const fetchArticle = async () => {
   try {
@@ -31,8 +39,6 @@ const fetchArticle = async () => {
   } catch (err) {
     console.log(err)
   } finally {
-    console.log('获取文章完成')
-    console.log(article.value.content)
     md_html.value = md.render(article.value.content) // 将 Markdown 内容渲染为 HTML
   }
 }
@@ -243,5 +249,22 @@ onMounted(() => {
 .article-cover-image:hover {
   opacity: 1;
   /* 悬停时恢复不透明 */
+}
+
+/* 重置公式容器的样式 */
+.markdown-body {
+  line-height: normal !important; /* 避免 line-height 影响公式渲染 */
+}
+
+/* 确保 KaTeX 公式的字体大小正常 */
+.markdown-content .katex {
+  font-size: 1.1em !important; /* 根据需要调整 */
+  line-height: 1.1 !important; /* 确保行高正常 */
+}
+
+/* 修复上下标位置 */
+.markdown-content .katex .mord + .msupsub .mord {
+  position: relative !important;
+  top: -0.1em !important; /* 根据需要微调 */
 }
 </style>

@@ -101,7 +101,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <div class="row mb-4 mt-4">
+    <!-- <div class="row mb-4 mt-4">
       <div class="col-md-4">
         <div
           class="row g-0 border custom_rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative hot-blog-cover"
@@ -153,49 +153,47 @@ onMounted(() => {
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="row g-5">
       <div class="col-md-8">
-        <div v-for="(articleItem, index) in articles" :key="index">
-          <div class="row align-items-stretch">
-            <div class="col-md-8 d-flex flex-column pb-3 mb-3">
-              <article class="blog-post border-bottom flex-grow-1">
-                <h5 class="display-5 link-body-emphasis mb-3 mt-3">
-                  <router-link :to="`/post/${articleItem.url}`" class="text-decoration-none">{{
-                    articleItem.title
-                  }}</router-link>
-                </h5>
-                <p class="blog-post-meta d-flex align-items-center">
-                  <img
-                    src="https://github.com/mdo.png"
-                    alt="mdo"
-                    width="24"
-                    height="24"
-                    class="rounded-circle me-2"
-                    ref="avatar"
-                  />
-                  <router-link :to="`/u/${articleItem.author}`" class="me-2 cursor-pointer">
-                    {{ articleItem.author }}
-                  </router-link>
-                  <span>{{ formattedDate(articleItem.publishedDate) }}</span>
-                </p>
-
-                <p class="content-clamp">{{ articleItem.content }}</p>
-              </article>
-            </div>
-            <div class="col-md-4 d-flex align-items-stretch pt-5 pb-3 mb-3">
-              <div class="w-100">
+        <div class="row align-items-stretch" v-for="(articleItem, index) in articles" :key="index">
+          <div class="col-md-8 d-flex flex-column pb-3">
+            <article class="blog-post border-bottom flex-grow-1">
+              <h5 class="display-5 link-body-emphasis">
+                <router-link :to="`/post/${articleItem.url}`" class="text-decoration-none">{{
+                  articleItem.title
+                }}</router-link>
+              </h5>
+              <div class="mb-3">
                 <img
-                  src="/article_cover.jpeg"
-                  class="img-fluid custom-rounded-1 w-100"
-                  style="object-fit: cover; height: 140px"
+                  src="https://github.com/mdo.png"
+                  alt="mdo"
+                  width="24"
+                  height="24"
+                  class="rounded-circle me-2"
+                  ref="avatar"
                 />
+                <router-link :to="`/u/${articleItem.author}`" class="me-2 cursor-pointer">
+                  {{ articleItem.author }}
+                </router-link>
+                <span>{{ formattedDate(articleItem.publishedDate) }}</span>
               </div>
+
+              <p class="content-clamp">{{ articleItem.content }}</p>
+            </article>
+          </div>
+          <div class="col-md-4 d-flex align-items-stretch pb-3">
+            <div class="w-100 d-flex flex-column justify-content-end">
+              <img
+                src="/article_cover.jpeg"
+                class="img-fluid custom-rounded-1 w-100"
+                style="object-fit: cover; height: 140px"
+              />
             </div>
           </div>
-          <div ref="bottomObserver" class="observer"></div>
         </div>
+        <div ref="bottomObserver" class="observer"></div>
       </div>
 
       <AppSiderbar />
@@ -252,11 +250,12 @@ onMounted(() => {
 .content-clamp {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
-  line-clamp: 2;
+  line-clamp: 3;
+  height: 4.5em; /* 假设行高为 1.5em，三行高度为 4.5em */
 }
 
 .custom-rounded-1 {

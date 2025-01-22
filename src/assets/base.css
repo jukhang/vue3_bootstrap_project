@@ -37,12 +37,11 @@
 }
 
 /* 覆盖分隔线样式 */
-.aie-container .aie-menu-divider {
+/* .aie-container .aie-menu-divider {
   height: 60px !important;
   width: 1px !important;
-  /* background-color: #e9ecef !important; */
   margin: 0 4px !important;
-}
+} */
 
 .aie-container aie-header > div {
   border-bottom: 1px solid var(--aie-border-color) !important;

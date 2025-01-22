@@ -38,10 +38,7 @@ onMounted(() => {
     <div class="position-sticky" style="top: 2rem">
       <div class="p-4 mb-3 bg-body-tertiary sidebar-section">
         <h4 class="">About</h4>
-        <p class="mb-0">
-          Customize this section to tell your visitors a little bit about your publication, writers,
-          content, or something else entirely. Totally up to you.
-        </p>
+        <p class="mb-0">一个自由表达、讨论和分享观点的场所。</p>
       </div>
 
       <div class="p-4 mb-3 bg-body-tertiary sidebar-section">
@@ -64,41 +61,21 @@ onMounted(() => {
       </div>
 
       <div class="p-4 mb-3 bg-body-tertiary sidebar-section" v-if="recent_articles">
-        <h4 class="">Recent posts</h4>
-        <ul class="list-unstyled mb-0">
+        <h4 class="mb-3">最近更新</h4>
+        <ul class="list-unstyled">
           <li>
             <router-link
               v-for="article in recent_articles"
-              class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-1 link-body-emphasis text-decoration-none"
+              :key="article.url"
+              class="text-decoration-none"
               :to="`/post/${article.url}`"
             >
-              <h6 class="mb-0">{{ article.title }}</h6>
+              <p class="mb-2 text-primary fs-6">
+                {{ article.title }}
+              </p>
             </router-link>
           </li>
-          <!-- <li>
-                        <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-1 link-body-emphasis text-decoration-none"
-                            href="#">
-                            <h6 class="mb-0">This is another blog post title</h6>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-1 link-body-emphasis text-decoration-none"
-                            href="#">
-                            <h6 class="mb-0">Longer blog post title: This one has multiple lines!</h6>
-                        </a>
-                    </li> -->
         </ul>
-      </div>
-
-      <div class="p-4 mb-3 bg-body-tertiary sidebar-section">
-        <h4 class="">Archives</h4>
-        <ol class="list-unstyled mb-0">
-          <li><a href="#" class="archive-list">2024</a></li>
-          <li><a href="#" class="archive-list">2023</a></li>
-          <li><a href="#" class="archive-list">2022</a></li>
-          <li><a href="#" class="archive-list">2021</a></li>
-          <li><a href="#" class="archive-list">2020</a></li>
-        </ol>
       </div>
     </div>
   </div>
