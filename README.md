@@ -33,3 +33,11 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Docker
+
+```sh
+docker build -t web-app:latest .
+
+docker run -d -p 8081:80 web-app
+```
