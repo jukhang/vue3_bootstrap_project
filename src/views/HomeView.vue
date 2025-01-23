@@ -155,7 +155,7 @@ onMounted(() => {
       </div>
     </div> -->
 
-    <div class="row g-5">
+    <div class="row g-5 pb-3">
       <div class="col-md-8">
         <div class="row align-items-stretch" v-for="(articleItem, index) in articles" :key="index">
           <div class="col-md-8 d-flex flex-column pb-3">
