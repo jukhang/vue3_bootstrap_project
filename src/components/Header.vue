@@ -4,13 +4,13 @@ defineOptions({
 })
 
 import { ref, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import axios from 'axios'
+import { useRouter } from 'vue-router'
+// import axios from 'axios'
 
-import SearchModal from '../components/SearchModal.vue'
+// import SearchModal from '../components/SearchModal.vue'
 
 const router = useRouter()
-const route = useRoute()
+// const route = useRoute()
 
 const username = ref('')
 const isLoggedIn = ref(false) // 响应式变量
@@ -141,7 +141,7 @@ onMounted(() => {
             aria-expanded="false"
           >
             <img
-              src="https://github.com/mdo.png"
+              src="/avatar.jpg"
               alt="mdo"
               width="32"
               height="32"

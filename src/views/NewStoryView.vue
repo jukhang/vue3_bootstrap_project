@@ -279,7 +279,7 @@ const submitData = async () => {
                 aria-expanded="false"
               >
                 <img
-                  src="https://github.com/mdo.png"
+                  src="/avatar.jpg"
                   alt="mdo"
                   width="32"
                   height="32"

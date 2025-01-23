@@ -14,7 +14,7 @@ const loading = ref(false)
 const popoverContent = `
   <div>
     <div class="d-flex align-items-center">
-      <img src="https://github.com/mdo.png" alt="mdo" width="30" height="30" class="rounded-circle">
+      <img src="/avatar.jpg" alt="mdo" width="30" height="30" class="rounded-circle">
       <button class="btn btn-primary btn-sm me-2">Follow</button>
     </div>
     <strong>longfellow</strong>
@@ -167,7 +167,7 @@ onMounted(() => {
               </h5>
               <div class="mb-3">
                 <img
-                  src="https://github.com/mdo.png"
+                  src="/avatar.jpg"
                   alt="mdo"
                   width="24"
                   height="24"
