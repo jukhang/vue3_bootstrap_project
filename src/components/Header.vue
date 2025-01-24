@@ -141,7 +141,7 @@ onMounted(() => {
             aria-expanded="false"
           >
             <img
-              src="/avatar.jpg"
+              src="https://s2.loli.net/2025/01/24/qSYT4J12n67Dgkt.jpg"
               alt="mdo"
               width="32"
               height="32"
