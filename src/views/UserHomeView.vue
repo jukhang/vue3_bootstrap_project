@@ -21,7 +21,7 @@ onMounted(() => {
 
 const user = {
   name: 'longfellow',
-  avatar: '/avatar.jpg',
+  avatar: 'https://s2.loli.net/2025/01/24/qSYT4J12n67Dgkt.jpg',
   joinDate: 'January 2022',
   memberId: '#12345',
   favorites: 42,
@@ -81,7 +81,7 @@ const activeSidebar = ref('基本信息')
               <div class="card border-0">
                 <div class="d-flex align-items-center mb-4">
                   <img
-                    src="/avatar.jpg"
+                    src="https://s2.loli.net/2025/01/24/qSYT4J12n67Dgkt.jpg"
                     alt="User Avatar"
                     class="rounded-circle me-3"
                     style="width: 100px; height: 100px"

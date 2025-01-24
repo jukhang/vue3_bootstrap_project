@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 
@@ -57,7 +57,7 @@ if (localStorage.getItem('token')) {
             <div class="row g-0">
               <div class="col-md-6 col-lg-5 d-none d-md-block">
                 <img
-                  src="/img1.webp"
+                  src="https://s2.loli.net/2025/01/24/VUEHjkAObLrpKw1.webp"
                   alt="login form"
                   class="img-fluid"
                   style="border-radius: 1rem 0 0 1rem"
@@ -126,7 +126,7 @@ if (localStorage.getItem('token')) {
 
 <style scoped>
 .vh-100 {
-  background-image: url('/blog-login.webp');
+  background-image: url('https://s2.loli.net/2025/01/24/YkJlsHPy8KSObAq.webp');
   background-size: cover;
   background-position: center;
 }

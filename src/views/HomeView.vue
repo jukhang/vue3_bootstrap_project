@@ -8,13 +8,13 @@ import AppHeader from '../components/Header.vue'
 import AppFooter from '../components/Footer.vue'
 import AppSiderbar from '../components/Siderbar.vue'
 
-const page = ref(1)
-const loading = ref(false)
+// const page = ref(1)
+// const loading = ref(false)
 
 const popoverContent = `
   <div>
     <div class="d-flex align-items-center">
-      <img src="/avatar.jpg" alt="mdo" width="30" height="30" class="rounded-circle">
+      <img src="https://s2.loli.net/2025/01/24/qSYT4J12n67Dgkt.jpg" alt="mdo" width="30" height="30" class="rounded-circle">
       <button class="btn btn-primary btn-sm me-2">Follow</button>
     </div>
     <strong>longfellow</strong>
@@ -167,7 +167,7 @@ onMounted(() => {
               </h5>
               <div class="mb-3">
                 <img
-                  src="/avatar.jpg"
+                  src="https://s2.loli.net/2025/01/24/qSYT4J12n67Dgkt.jpg"
                   alt="mdo"
                   width="24"
                   height="24"
@@ -211,7 +211,7 @@ onMounted(() => {
 }
 
 .blog-cover {
-  background-image: url('/blog-cover.webp');
+  background-image: url('https://s2.loli.net/2025/01/24/N16UXaPmxKbtQpH.webp');
   background-size: cover;
   background-position: center;
   height: 400px;
