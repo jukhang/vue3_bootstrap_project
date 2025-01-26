@@ -48,7 +48,12 @@ onMounted(() => {
         to="/"
         class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none pe-3"
       >
-        <img src="/header.png" alt="Logo" width="180" height="60" />
+        <img
+          src="https://s2.loli.net/2025/01/24/3cEMIzr5vTgRqnK.png"
+          alt="Logo"
+          width="180"
+          height="60"
+        />
       </router-link>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">

@@ -2,13 +2,44 @@
 defineOptions({
   name: 'AppComment'
 })
+
+import config from '@/config' // 引入配置文件
+
+import { useRoute } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import Vditor from 'vditor'
+import axios from 'axios'
 import 'vditor/dist/index.css'
+import CommentItem from '../components/CommentItem.vue'
 
+const route = useRoute() // 获取路由对象
 const vditor = ref(null)
+const article_uuid = ref('') // 获取 UUID 参数
+const comments = ref([])
+
+const fetchComments = async () => {
+  try {
+    const response = await axios.get(`${config.API_BASE_URL}/comment`, {
+      params: {
+        article_uuid: article_uuid.value // 将文章 ID 作为查询参数传递
+      }
+    }) // 假设文章ID为1
+    comments.value = response.data.data
+    console.log(comments.value)
+  } catch (error) {
+    console.error('Error fetching comments:', error)
+  }
+}
 
 onMounted(() => {
+  if (route?.params?.url) {
+    article_uuid.value = route.params.url // 获取 url
+  } else {
+    article_uuid.value = null // 如果路由参数不存在，设置为 null
+  }
+
+  fetchComments()
+
   vditor.value = new Vditor('vditor', {
     height: 'auto',
     minHeight: 200,
@@ -32,206 +63,15 @@ onMounted(() => {})
 
 <template>
   <div class="border-top py-3 border-bottom">
-    <!--comment-->
-    <div class="">
+    <div>
       <div class="card-header pt-3">
         <h3>最新评论</h3>
       </div>
       <div class="card-body pb-3 m-3">
         <div class="row">
           <div class="col">
-            <div class="d-flex flex-start mt-4">
-              <img
-                class="rounded-circle shadow-1-strong me-3"
-                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp"
-                alt="avatar"
-                width="48"
-                height="48"
-              />
-              <div class="flex-grow-1 flex-shrink-1">
-                <div>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <p class="mb-1">
-                      Maria Smantha <span class="small">· 2 hours ago · </span>
-                      <a href="#!">
-                        <span class="small">#reply</span>
-                      </a>
-                    </p>
-                  </div>
-                  <p class="small mb-0">
-                    It is a long established fact that a reader will be distracted by the readable
-                    content of a page.
-                  </p>
-                </div>
-
-                <div class="d-flex flex-start mt-4">
-                  <a class="me-3" href="#">
-                    <img
-                      class="rounded-circle shadow-1-strong"
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp"
-                      alt="avatar"
-                      width="48"
-                      height="48"
-                    />
-                  </a>
-                  <div class="flex-grow-1 flex-shrink-1">
-                    <div>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <p class="mb-1">
-                          Simona Disa <span class="small">· 3 hours ago · </span>
-                          <a href="#!">
-                            <span class="small">#reply</span>
-                          </a>
-                        </p>
-                      </div>
-                      <p class="small mb-0">
-                        letters, as opposed to using 'Content here, content here', making it look
-                        like readable English.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="d-flex flex-start mt-4">
-                  <a class="me-3" href="#">
-                    <img
-                      class="rounded-circle shadow-1-strong"
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp"
-                      alt="avatar"
-                      width="48"
-                      height="48"
-                    />
-                  </a>
-                  <div class="flex-grow-1 flex-shrink-1">
-                    <div>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <p class="mb-1">
-                          John Smith <span class="small">· 4 hours ago · </span>
-                          <a href="#!">
-                            <span class="small">#reply</span>
-                          </a>
-                        </p>
-                      </div>
-                      <p class="small mb-0">
-                        the majority have suffered alteration in some form, by injected humour, or
-                        randomised words.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="d-flex flex-start mt-4">
-              <img
-                class="rounded-circle shadow-1-strong me-3"
-                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(12).webp"
-                alt="avatar"
-                width="48"
-                height="48"
-              />
-              <div class="flex-grow-1 flex-shrink-1">
-                <div>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <p class="mb-1">
-                      Natalie Smith <span class="small">· 2 hours ago · </span>
-                      <a href="#!">
-                        <span class="small">#reply</span>
-                      </a>
-                    </p>
-                  </div>
-                  <p class="small mb-0">
-                    The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for
-                    those interested. Sections 1.10.32 and 1.10.33.
-                  </p>
-                </div>
-
-                <div class="d-flex flex-start mt-4">
-                  <a class="me-3" href="#">
-                    <img
-                      class="rounded-circle shadow-1-strong"
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(31).webp"
-                      alt="avatar"
-                      width="48"
-                      height="48"
-                    />
-                  </a>
-                  <div class="flex-grow-1 flex-shrink-1">
-                    <div>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <p class="mb-1">
-                          Lisa Cudrow <span class="small">· 4 hours ago · </span>
-                          <a href="#!">
-                            <span class="small">#reply</span>
-                          </a>
-                        </p>
-                      </div>
-                      <p class="small mb-0">
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                        ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-                        tempus viverra turpis.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="d-flex flex-start mt-4">
-                  <a class="me-3" href="#">
-                    <img
-                      class="rounded-circle shadow-1-strong"
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(29).webp"
-                      alt="avatar"
-                      width="48"
-                      height="48"
-                    />
-                  </a>
-                  <div class="flex-grow-1 flex-shrink-1">
-                    <div>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <p class="mb-1">
-                          Maggie McLoan <span class="small">· 5 hours ago · </span>
-                          <a href="#!">
-                            <span class="small">#reply</span>
-                          </a>
-                        </p>
-                      </div>
-                      <p class="small mb-0">
-                        a Latin professor at Hampden-Sydney College in Virginia, looked up one of
-                        the more obscure Latin words, consectetur
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="d-flex flex-start mt-4">
-                  <a class="me-3" href="#">
-                    <img
-                      class="rounded-circle shadow-1-strong"
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp"
-                      alt="avatar"
-                      width="48"
-                      height="48"
-                    />
-                  </a>
-                  <div class="flex-grow-1 flex-shrink-1">
-                    <div>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <p class="mb-1">
-                          John Smith <span class="small">· 6 hours ago · </span>
-                          <a href="#!">
-                            <span class="small">#reply</span>
-                          </a>
-                        </p>
-                      </div>
-                      <p class="small mb-0">
-                        Autem, totam debitis suscipit saepe sapiente magnam officiis quaerat
-                        necessitatibus odio assumenda, perferendis quae iusto labore laboriosam
-                        minima numquam impedit quam dolorem!
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div v-for="comment in comments" :key="comment.id">
+              <CommentItem :comment="comment" />
             </div>
           </div>
         </div>
@@ -241,20 +81,10 @@ onMounted(() => {})
         <div class="d-flex flex-start w-100" id="vditor"></div>
 
         <div class="float-end pt-2 pb-2">
-          <button
-            type="button"
-            data-mdb-button-init
-            data-mdb-ripple-init
-            class="btn btn-primary btn-sm me-3"
-          >
+          <button type="button" class="btn btn-primary btn-sm me-3" @click="postComment">
             Post comment
           </button>
-          <button
-            type="button"
-            data-mdb-button-init
-            data-mdb-ripple-init
-            class="btn btn-outline-primary btn-sm"
-          >
+          <button type="button" class="btn btn-outline-primary btn-sm" @click="cancelComment">
             Cancel
           </button>
         </div>

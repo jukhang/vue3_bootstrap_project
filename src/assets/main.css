@@ -65,3 +65,9 @@
 .mb-0 {
   font-weight: 400 !important;
 }
+
+.cropper-crop-box {
+  width: 100% !important;
+  height: 240px !important;
+  transform: translate3d(0px, 27.3333px, 0px) !important;
+}

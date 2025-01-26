@@ -115,7 +115,12 @@ const submitData = async () => {
           to="/"
           class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none"
         >
-          <img src="/header.png" alt="Logo" width="180" height="60" />
+          <img
+            src="https://s2.loli.net/2025/01/24/3cEMIzr5vTgRqnK.png"
+            alt="Logo"
+            width="180"
+            height="60"
+          />
         </router-link>
         <div class="ms-auto">
           <div

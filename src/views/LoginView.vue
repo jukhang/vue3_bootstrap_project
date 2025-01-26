@@ -67,7 +67,12 @@ if (localStorage.getItem('token')) {
                 <div class="card-body p-4 p-lg-5 text-black">
                   <form>
                     <div class="d-flex align-items-center mb-3 pb-1">
-                      <img src="/header.png" alt="Logo" width="240" height="80" />
+                      <img
+                        src="https://s2.loli.net/2025/01/24/3cEMIzr5vTgRqnK.png"
+                        alt="Logo"
+                        width="240"
+                        height="80"
+                      />
                     </div>
 
                     <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px">
